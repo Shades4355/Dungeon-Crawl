@@ -1,7 +1,8 @@
 class PlayerClass:
   def __init__(self, name='Tim(?)', health=25, damage=2, defense=1, special=[], inventory=["potion: cure light", "scroll: Escape"]):
     self.name = name
-    self.health = health
+    self.current_health = health
+    self.max_health = health
     self.damage = damage
     self.defense = defense
     self.special = special
@@ -22,7 +23,7 @@ class PlayerClass:
     print("Inventory ", end=': ')
     print(self.inventory)
     choice = ''
-    while not choice in (player.inventory or _COMBAT_ACTIONS):
+    while not choice in (self.inventory or _COMBAT_ACTIONS):
       choice = input('>> ').lower()
       if choice in _COMBAT_ACTIONS:
         _COMBAT_ACTIONS[choice]()

@@ -1,21 +1,55 @@
-import random
+import random, time
 
-import classes.playerClass as playerClass
+from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
+import parser as par
 
+###################################
+# player needs to be defined here #
+###################################
 name = input("Enter your name:\n>> ")
 
-player = playerClass.PlayerClass(name=name)
+player = PlayerClass(name=name)
+from inventory.potions import Potion as Potion
 
-print("name:", player.name)
-print("Inventory:", player.inventory)
-print("Special Moves:", player.special)
-print()
+#############
+# Functions #
+#############
+def parseInput():
+  ret = input(">> ")
+  par.Lexicon.scan(ret)
 
+def combatEngine(player, enemy, _COMBAT_ACTIONS):
+  print(MAINCOMBATDISPLAY_PIC)
+  choice = input(">> ").lower()
+
+  if choice in _COMBAT_ACTIONS:
+      _COMBAT_ACTIONS[choice]()
+  elif choice == "quit":
+    print("Goodbye")
+    sys.exit()
+  else:
+    print('Invalid command; please try again')
+
+################
+# dictionaries #
+################
+MAINCOMBATDISPLAY_PIC = '''
+########################
+#  attack  #   defend  #
+# special  # inventory #
+########################
+'''
+
+_COMBAT_ACTIONS = {
+"attack": player.attack,
+"inventory": player.showInventory,
+}
 
 #############
 # Main Loop #
 ############
+
 
 _RANDOM_ENCOUNTER = {e.name.casefold(): e for e in [
 enemyClass.Goblin(name = "Goblin"),
@@ -34,5 +68,23 @@ for i in range(numberOfEnemyCombatants):
   i = randomEncounterChooser()
   enemiesInFight.append(i)
 
-for i in range(len(enemiesInFight)):
-    print("enemy " + str(i + 1) + ": " + enemiesInFight[i].name + " " + "; health: " + str(enemiesInFight[i].current_hit_points))
+
+    #################
+    # Combat start #
+    ################
+
+combat = True
+while combat:
+    while player.current_health > 0 and [i.alive for i in enemiesInFight]:
+        time.sleep(1)
+
+        print("\n" + player.name + ": " + str(player.current_health) + "\n")
+        time.sleep(1)
+
+        print("Pick Target:")
+        for i in range(len(enemiesInFight)):
+            print(str(i + 1) + ": " + enemiesInFight[i].name)
+        target = int(input(">> "))
+        enemy = enemiesInFight[target - 1]
+
+        combatEngine(player, enemy, _COMBAT_ACTIONS)
