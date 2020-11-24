@@ -18,6 +18,7 @@ from inventory.potions import Potion as Potion
 def parseInput():
   ret = input(">> ")
   par.Lexicon.scan(ret)
+# TODO: remove parser
 
 def combatEngine(player, enemy, _COMBAT_ACTIONS):
   print(MAINCOMBATDISPLAY_PIC)
