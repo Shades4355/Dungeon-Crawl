@@ -42,7 +42,7 @@ class Hobgoblin(Goblin):
     def __init__(self, name):
         super().__init__(name=name)
         self.max_hit_points = 6
-        self.current_health = 6
+        self.current_hit_points = 6
         self.defense = 1
 
 
