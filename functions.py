@@ -9,8 +9,8 @@ def playerTurn(player:object, enemiesInFight:list):
 
     MAINCOMBATDISPLAY_PIC = '''
     ########################
-    #  attack  #   defend  #
-    # special  # inventory #
+    #  attack  # inventory #
+    # special  #   quit    #
     ########################
     '''
 
@@ -21,7 +21,11 @@ def playerTurn(player:object, enemiesInFight:list):
     # targeting #
     target = 0
     while target - 1 not in range(len(enemiesInFight)):
-      target = int(input(">> "))
+      target = input(">> ")
+      try:
+          target = int(target)
+      except:
+          target = 0
       # TODO: add check to avoid crashing when a non-int is entered
     enemy = enemiesInFight[target - 1]
 
@@ -33,8 +37,8 @@ def playerTurn(player:object, enemiesInFight:list):
         print(MAINCOMBATDISPLAY_PIC)
         choice = input(">> ").lower()
 
-        if choice in _COMBAT_ACTIONS:
-            _COMBAT_ACTIONS[choice](playerTurn, player, enemiesInFight)
+        if "inventory" in choice:
+            player.showInventory(inventoryActions, playerTurn, player, enemiesInFight)
         elif choice == "attack":
             enemy.take_damage(player.damage)
             break
