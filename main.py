@@ -49,6 +49,12 @@ def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
     if not enemy.alive:
         del enemiesInFight[target - 1]
 
+def randomEncounterChooser(_RANDOM_ENCOUNTER):
+    enemyType = random.choice(list(_RANDOM_ENCOUNTER.values()))
+    return enemyType
+  # TODO: fix - returning copies of duplicate enemies, instead of uniques of same type
+  # IE two wolfs share the same current_hit_points
+
 ################
 # dictionaries #
 ################
@@ -79,18 +85,11 @@ enemyClass.Hobgoblin(name = "Hobgoblin"),
 # Main Loop #
 ############
 
-def randomEncounterChooser():
-  enemyType = random.choice(list(_RANDOM_ENCOUNTER.values()))
-  return enemyType
-  # TODO: fix - returning copies of duplicate enemies, instead of uniques of same type
-  # IE two wolfs share the same current_hit_points
-
-
 numberOfEnemyCombatants = 3 #
 enemiesInFight = []
 for i in range(numberOfEnemyCombatants):
-  i = randomEncounterChooser()
-  enemiesInFight.append(i)
+  encounter = randomEncounterChooser(_RANDOM_ENCOUNTER)
+  enemiesInFight.append(encounter)
 
 
     #################
