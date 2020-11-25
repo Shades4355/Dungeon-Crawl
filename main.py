@@ -96,7 +96,7 @@ while combat:
     while player.alive and len(enemiesInFight) > 0:
         time.sleep(1)
 
-        print("\n" + player.name + ": " + str(player.current_health) + "\n")
+        print("\n" + player.name + ": " + str(player.current_health) + " health" + "\n")
         time.sleep(1)
 
         playerTurn(player, enemiesInFight)
