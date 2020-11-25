@@ -4,18 +4,15 @@ from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
 import inventory.potions as potions
 
-###################################
-# player needs to be defined here #
-###################################
-name = input("Enter your name:\n>> ")
-
-player = PlayerClass(name=name)
-from inventory.potions import Potion as Potion
-
 #############
 # Functions #
 #############
-def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
+def playerTurn(player:object, enemiesInFight:list):
+    _COMBAT_ACTIONS = {
+    "inventory": player.showInventory,
+    "special": player.showSpecialMoves,
+    }
+
     print("Pick Target:")
     for i in range(len(enemiesInFight)):
         print(str(i + 1) + ": " + enemiesInFight[i].name)
@@ -24,6 +21,7 @@ def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
     target = 0
     while target - 1 not in range(len(enemiesInFight)):
       target = int(input(">> "))
+      # TODO: add check to avoid crashing when a non-int is entered
     enemy = enemiesInFight[target - 1]
 
     print("Enemy has {} health and {} lives".format(enemy.current_hit_points, enemy.lives))
@@ -35,7 +33,7 @@ def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
         choice = input(">> ").lower()
 
         if choice in _COMBAT_ACTIONS:
-            _COMBAT_ACTIONS[choice]()
+            _COMBAT_ACTIONS[choice](playerTurn, player, enemiesInFight)
         elif choice == "attack":
             enemy.take_damage(player.damage)
             break
@@ -48,6 +46,11 @@ def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
 
     if not enemy.alive:
         del enemiesInFight[target - 1]
+
+def enemyTurn(player:object, enemiesInFight:list):
+    """Currently, enemies attack once and that's all"""
+    for enemy in enemiesInFight:
+        player.take_damage(enemy.attack)
 
 def randomEncounterChooser(_RANDOM_ENCOUNTER):
     enemyType = random.choice(list(_RANDOM_ENCOUNTER.values()))
@@ -65,11 +68,6 @@ MAINCOMBATDISPLAY_PIC = '''
 ########################
 '''
 
-_COMBAT_ACTIONS = {
-"inventory": player.showInventory,
-"special": player.showSpecialMoves,
-}
-
 inventoryActions = {
 "potion: cure light": potions.Cure_Light.heal,
 }
@@ -84,22 +82,27 @@ enemyClass.Hobgoblin(name = "Hobgoblin"),
 #############
 # Main Loop #
 ############
-numberOfEnemyCombatants = 3 #
-enemiesInFight = []
-for i in range(numberOfEnemyCombatants):
-  encounter = randomEncounterChooser(_RANDOM_ENCOUNTER)
-  enemiesInFight.append(encounter)
-
-
-    #################
-    # Combat start #
-    ################
 combat = True
 while combat:
-    while player.current_health > 0 and enemiesInFight:
+    name = input("Enter your name:\n>> ")
+    player = PlayerClass(name=name)
+
+    numberOfEnemyCombatants = 3 #
+    enemiesInFight = []
+    for i in range(numberOfEnemyCombatants):
+        encounter = randomEncounterChooser(_RANDOM_ENCOUNTER)
+        enemiesInFight.append(encounter)
+
+    while player.alive and len(enemiesInFight) > 0:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + "\n")
         time.sleep(1)
 
-        combatEngine(player, enemiesInFight, _COMBAT_ACTIONS)
+        playerTurn(player, enemiesInFight)
+        enemyTurn(player, enemiesInFight)
+    choice = input("Play again? (y/n)\n>> ")
+    if not choice.startswith("y"):
+        print('Goodbye')
+        combat = False
+sys.exit()
