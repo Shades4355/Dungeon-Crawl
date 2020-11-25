@@ -25,27 +25,23 @@ enemyClass.Hobgoblin(name = "Hobgoblin"),
 #############
 # Main Loop #
 ############
-combat = True
-while combat:
-    name = input("Enter your name:\n>> ")
-    player = PlayerClass(name=name)
+name = input("Enter your name:\n>> ")
+player = PlayerClass(name=name)
 
-    numberOfEnemyCombatants = 3 #
+while player.alive:
+    numberOfEnemyCombatants = random.randint(1,3)
     enemiesInFight = []
     for i in range(numberOfEnemyCombatants):
-        encounter = randomEncounterChooser(_RANDOM_ENCOUNTER)
+        encounter = f.randomEncounterChooser(_RANDOM_ENCOUNTER)
         enemiesInFight.append(encounter)
 
-    while player.alive and len(enemiesInFight) > 0:
+    while len(enemiesInFight) > 0:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + " health" + "\n")
         time.sleep(1)
 
-        playerTurn(player, enemiesInFight)
-        enemyTurn(player, enemiesInFight)
-    choice = input("Play again? (y/n)\n>> ")
-    if not choice.startswith("y"):
-        print('Goodbye')
-        combat = False
+        f.playerTurn(player, enemiesInFight)
+        f.enemyTurn(player, enemiesInFight)
+    player.showInventory(playerTurn, player, enemiesInFight) # TODO: replace with between combat action options
 sys.exit()
