@@ -35,7 +35,8 @@ while player.alive:
         encounter = f.randomEncounterChooser(_RANDOM_ENCOUNTER)
         enemiesInFight.append(encounter)
 
-    while len(enemiesInFight) > 0:
+    combat = True
+    while combat:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + " health" + "\n")
@@ -43,5 +44,7 @@ while player.alive:
 
         f.playerTurn(player, enemiesInFight)
         f.enemyTurn(player, enemiesInFight)
-    player.showInventory(playerTurn, player, enemiesInFight) # TODO: replace with between combat action options
+        if len(enemiesInFight) <= 0:
+            combat = False
+    # TODO: replace with between combat action options
 sys.exit()
