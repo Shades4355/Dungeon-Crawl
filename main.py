@@ -35,7 +35,7 @@ def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
         choice = input(">> ").lower()
 
         if choice in _COMBAT_ACTIONS:
-            _COMBAT_ACTIONS[choice](enemiesInFight=enemiesInFight, _COMBAT_ACTIONS=_COMBAT_ACTIONS, specialActions=specialActions, inventoryActions=inventoryActions)
+            _COMBAT_ACTIONS[choice]()
         elif choice == "attack":
             enemy.take_damage(player.damage)
             break
@@ -84,7 +84,6 @@ enemyClass.Hobgoblin(name = "Hobgoblin"),
 #############
 # Main Loop #
 ############
-
 numberOfEnemyCombatants = 3 #
 enemiesInFight = []
 for i in range(numberOfEnemyCombatants):
@@ -95,7 +94,6 @@ for i in range(numberOfEnemyCombatants):
     #################
     # Combat start #
     ################
-
 combat = True
 while combat:
     while player.current_health > 0 and enemiesInFight:

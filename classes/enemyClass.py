@@ -10,10 +10,15 @@ class EnemyClass(object):
         self.alive = True
 
     def take_damage(self, damage):
-        remaining_points = self.current_hit_points - damage
+        postDR = damage - self.defense
+        if postDR > 0:
+            hurt = postDR
+        else:
+            hurt = 0
+        remaining_points = self.current_hit_points - hurt
         if remaining_points > 0 :
             self.current_hit_points = remaining_points
-            print("{} took {} damage, and have {} left".format(self.name, damage, self.current_hit_points))
+            print("{} took {} damage, and have {} left".format(self.name, hurt, self.current_hit_points))
         else:
             self.lives -= 1
             if self.lives > 0:
@@ -37,10 +42,10 @@ class Hobgoblin(Goblin):
     def __init__(self, name):
         super().__init__(name=name)
         self.health = 6
-        self.defense = 2
+        self.defense = 1
 
 
 class Wolf(EnemyClass):
     """A basic wolf"""
     def __init__(self, name):
-        super().__init__(name=name, health=5, attack=2, defense=1)
+        super().__init__(name=name, health=3, attack=2, defense=1)
