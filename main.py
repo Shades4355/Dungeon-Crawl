@@ -3,7 +3,6 @@ import random, time, sys
 from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
 import inventory.potions as potions
-import parser as par
 
 ###################################
 # player needs to be defined here #
@@ -16,11 +15,6 @@ from inventory.potions import Potion as Potion
 #############
 # Functions #
 #############
-def parseInput():
-  ret = input(">> ")
-  par.Lexicon.scan(ret)
-# TODO: remove parser
-
 def combatEngine(player, enemiesInFight, _COMBAT_ACTIONS):
     print("Pick Target:")
     for i in range(len(enemiesInFight)):
