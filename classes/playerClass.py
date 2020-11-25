@@ -1,4 +1,5 @@
 class PlayerClass:
+  "A starting Player"
   def __init__(self, name='Tim(?)', health=25, damage=2, defense=1, special=[], inventory=["potion: cure light", "scroll: Escape"]):
     self.name = name
     self.current_health = health

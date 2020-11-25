@@ -1,4 +1,4 @@
-import random, time
+import random, time, sys
 
 from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
@@ -21,16 +21,19 @@ def parseInput():
 # TODO: remove parser
 
 def combatEngine(player, enemy, _COMBAT_ACTIONS):
-  print(MAINCOMBATDISPLAY_PIC)
-  choice = input(">> ").lower()
+  choice = None
+  while choice not in _COMBAT_ACTIONS:
+    print(MAINCOMBATDISPLAY_PIC)
+    choice = input(">> ").lower()
 
-  if choice in _COMBAT_ACTIONS:
-      _COMBAT_ACTIONS[choice]()
-  elif choice == "quit":
-    print("Goodbye")
-    sys.exit()
-  else:
-    print('Invalid command; please try again')
+    if choice in _COMBAT_ACTIONS:
+        _COMBAT_ACTIONS[choice]()
+    elif choice == "quit":
+      print("Goodbye")
+      sys.exit()
+    else:
+      print('Invalid command; please try again')
+      time.sleep(1)
 
 ################
 # dictionaries #
@@ -45,6 +48,7 @@ MAINCOMBATDISPLAY_PIC = '''
 _COMBAT_ACTIONS = {
 "attack": player.attack,
 "inventory": player.showInventory,
+"special": player.showSpecialMoves,
 }
 
 #############
@@ -85,7 +89,11 @@ while combat:
         print("Pick Target:")
         for i in range(len(enemiesInFight)):
             print(str(i + 1) + ": " + enemiesInFight[i].name)
-        target = int(input(">> "))
+        
+        target = 0
+        while target - 1 not in range(len(enemiesInFight)):
+          target = int(input(">> "))
+        
         enemy = enemiesInFight[target - 1]
 
         combatEngine(player, enemy, _COMBAT_ACTIONS)
