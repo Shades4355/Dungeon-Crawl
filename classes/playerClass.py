@@ -1,5 +1,5 @@
 class PlayerClass:
-  "A starting Player"
+  """A starting Player"""
   def __init__(self, name='Tim(?)', health=25, damage=2, defense=1, special=[], inventory=["potion: cure light", "scroll: Escape"]):
     self.name = name
     self.current_health = health
@@ -9,7 +9,7 @@ class PlayerClass:
     self.special = special
     self.inventory = inventory
 
-  def attack(self):
+  def attack(self, enemy):
     attackDamage = self.damage - enemy.defense
     if attackDamage > 0:
       enemy.health -= attackDamage
