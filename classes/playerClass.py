@@ -16,18 +16,18 @@ class PlayerClass:
     else:
       print('Your attack fails to meaningfully injury your foe.')
 
-  def showSpecialMoves(self):
+  def showSpecialMoves(self, specialActions:object, enemiesInFight:list, _COMBAT_ACTIONS:object, *args):
     print('Special Moves', end=': ')
     print(self.special)
 
-  def showInventory(self):
+  def showInventory(self, inventoryActions:object, enemiesInFight:list, _COMBAT_ACTIONS:object, *args):
     print("Inventory ", end=': ')
-    print(self.inventory)
-    choice = ''
-    while not choice in (self.inventory or _COMBAT_ACTIONS):
+    print(", ".join(self.inventory))
+    choice = None
+    while not choice in (self.inventory):
       choice = input('>> ').lower()
-      if choice in _COMBAT_ACTIONS:
-        _COMBAT_ACTIONS[choice]()
-        combatEngine(player, enemy, _COMBAT_ACTIONS)
+      if choice in inventoryActions:
+        inventoryActions[choice]()
+        combatEngine(player, enemiesInFight, _COMBAT_ACTIONS)
       elif choice == 'back':
-        combatEngine(player, enemy, _COMBAT_ACTIONS)
+        combatEngine(player, enemiesInFight, _COMBAT_ACTIONS)

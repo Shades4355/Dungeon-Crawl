@@ -11,7 +11,7 @@ class EnemyClass(object):
 
     def take_damage(self, damage):
         remaining_points = self.current_hit_points - damage
-        if remaining_points >= 0 :
+        if remaining_points > 0 :
             self.current_hit_points = remaining_points
             print("{} took {} damage, and have {} left".format(self.name, damage, self.current_hit_points))
         else:
