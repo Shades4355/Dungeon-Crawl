@@ -14,7 +14,7 @@ def playerTurn(player:object, enemiesInFight:list):
     ########################
     '''
 
-    print("Pick Target:")
+    print("\nPick Target:")
     for i in range(len(enemiesInFight)):
         print(str(i + 1) + ": " + enemiesInFight[i].name)
 
@@ -37,8 +37,10 @@ def playerTurn(player:object, enemiesInFight:list):
         print(MAINCOMBATDISPLAY_PIC)
         choice = input(">> ").lower()
 
-        if "inventory" in choice:
-            player.showInventory(inventoryActions, playerTurn, player, enemiesInFight)
+        if "inventory" in choice.lower():
+            player.showInventory(playerTurn, player, enemiesInFight)
+        elif "special" in choice.lower():
+            player.showSpecialMoves(playerTurn, player, enemiesInFight)
         elif choice == "attack":
             enemy.take_damage(player.damage)
             break

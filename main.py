@@ -39,12 +39,12 @@ while player.alive:
     while combat:
         time.sleep(1)
 
-        print("\n" + player.name + ": " + str(player.current_health) + " health" + "\n")
+        print("\n" + player.name + ": " + str(player.current_health) + " health")
         time.sleep(1)
 
         f.playerTurn(player, enemiesInFight)
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
             combat = False
-    # TODO: replace with between combat action options
+    # TODO: add between combat action options
 sys.exit()

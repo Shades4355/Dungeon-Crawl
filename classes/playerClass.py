@@ -14,12 +14,26 @@ class PlayerClass:
     def showSpecialMoves(self, playerTurn, player, enemiesInFight):
         print('Special Moves', end=': ')
         print(", ".join(self.special))
-        playerTurn(player, enemiesInFight)
+        choice = ''
+        while choice not in self.special and choice.lower() != "back":
+            choice = input(">> ")
+        if choice in self.special:
+            # TODO: use Special move
+            pass
+        elif choice.lower() == "back":
+            playerTurn(player, enemiesInFight)
 
     def showInventory(self, playerTurn, player, enemiesInFight):
         print("Inventory ", end=': ')
         print(", ".join(self.inventory))
-        playerTurn(player, enemiesInFight)
+        choice = ''
+        while choice not in self.inventory and choice.lower() != "back":
+            choice = input(">> ")
+        if choice in self.inventory:
+            # TODO: use item
+            pass
+        elif choice.lower() == "back":
+            playerTurn(player, enemiesInFight)
 
     def take_damage(self, damage):
         postDR = damage - self.defense
