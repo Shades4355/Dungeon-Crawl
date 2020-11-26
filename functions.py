@@ -24,7 +24,7 @@ def playerTurn(player:object, enemiesInFight:list):
           target = int(target)
       except:
           target = 0
-      # TODO: add check to avoid crashing when a non-int is entered
+          
     enemy = enemiesInFight[target - 1]
 
     print("Enemy has {} health and {} lives".format(enemy.current_hit_points, enemy.lives))
