@@ -15,13 +15,6 @@ inventoryActions = {
 "potion: cure light": potions.Cure_Light.heal,
 }
 
-_RANDOM_ENCOUNTER = {e.name.casefold(): e for e in [
-enemyClass.Goblin(name = "Goblin"),
-enemyClass.Wolf(name = "Wolf"),
-enemyClass.Hobgoblin(name = "Hobgoblin"),
-]}
-
-
 #############
 # Main Loop #
 ############
