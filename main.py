@@ -30,10 +30,7 @@ player = PlayerClass(name=name)
 
 while player.alive:
     numberOfEnemyCombatants = random.randint(1,3)
-    enemiesInFight = []
-    for i in range(numberOfEnemyCombatants):
-        encounter = f.randomEncounterChooser(_RANDOM_ENCOUNTER)
-        enemiesInFight.append(encounter)
+    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants)
 
     combat = True
     while combat:
