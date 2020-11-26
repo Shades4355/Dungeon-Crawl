@@ -1,5 +1,6 @@
 import random, time, sys
 
+import classes.enemyClass as enemyClass
 
 def playerTurn(player:object, enemiesInFight:list):
     _COMBAT_ACTIONS = {
@@ -58,9 +59,51 @@ def enemyTurn(player:object, enemiesInFight:list):
     """Currently, enemies attack once and that's all"""
     for enemy in enemiesInFight:
         player.take_damage(enemy.attack)
+    # TODO: make this more interesting?
 
-def randomEncounterChooser(_RANDOM_ENCOUNTER):
-    enemyType = random.choice(list(_RANDOM_ENCOUNTER.values()))
-    return enemyType
-  # TODO: fix - returning copies of duplicate enemies, instead of uniques of same type
-  # IE two wolfs share the same current_hit_points
+def goblinEncounter(numOfFoes:int):
+    """An encounter table for a random goblin encounter
+
+    Includes golbins, wolves, and hobgoblins"""
+    list = []
+    w = 0
+    h = 0
+    g = 0
+    for i in range(numOfFoes):
+        randomNum = random.randint(1, 3)
+
+        if randomNum == 1:
+            w += 1
+            list.append(enemyClass.Wolf(name = "Wolf {}".format(w)))
+        elif randomNum == 2:
+            g += 1
+            list.append(enemyClass.Goblin(name = "Goblin {}".format(g)))
+        elif randomNum == 2:
+            g += 1
+            list.append(enemyClass.Hobgoblin(name = "Hobgoblin {}".format(h)))
+    return list
+
+def wolfEncounter(numOfFoes:int):
+    """An encounter table for a random wolf encounter
+
+    Includes wolves, and dire wolves"""
+    list = []
+    w = 0
+    d = 0
+    for i in range(numOfFoes):
+        randomNum = random.randint(1, 2)
+
+        if randomNum == 1:
+            w += 1
+            list.append(enemyClass.Wolf(name = "Wolf {}".format(w)))
+        elif randomNum == 2:
+            d += 1
+            list.append(enemyClass.DireWolf(name = "Dire Wolf {}".format(d)))
+    return list
+
+def randomEncounter(numOfFoes:int):
+    randomNum = random.randint(1, 2)
+    if randomNum == 1:
+        return wolfEncounter(numOfFoes)
+    elif randomNum == 2:
+        return goblinEncounter(numOfFoes)
