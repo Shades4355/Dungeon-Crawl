@@ -17,7 +17,7 @@ while player.alive:
     enemiesInFight = f.randomEncounter(numberOfEnemyCombatants)
 
     combat = True
-    while combat:
+    while player.alive and combat:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + " health")

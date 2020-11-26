@@ -58,7 +58,7 @@ def playerTurn(player:object, enemiesInFight:list):
         del enemiesInFight[target - 1]
 
 def enemyTurn(player:object, enemiesInFight:list):
-    """Currently, enemies attack once and that's all"""
+    """Currently, enemies roll to attack once and that's all"""
     for enemy in enemiesInFight:
         attack = roll(enemy.attack)
         if attack > player.ac:
@@ -84,8 +84,8 @@ def goblinEncounter(numOfFoes:int):
         elif randomNum == 2:
             g += 1
             list.append(enemyClass.Goblin(name = "Goblin {}".format(g)))
-        elif randomNum == 2:
-            g += 1
+        elif randomNum == 3:
+            h += 1
             list.append(enemyClass.Hobgoblin(name = "Hobgoblin {}".format(h)))
     return list
 
