@@ -1,11 +1,13 @@
 class EnemyClass(object):
     """Generic Enemy class from which specific enemies are based"""
-    def __init__(self, name='template', health=1, attack=1, defense=0, lives=1):
+    def __init__(self, name='template', health=1, attack=0, defense=0, damage=1, ac=10, lives=1):
         self.name = name
         self.max_hit_points = health
         self.current_hit_points = health
         self.attack = attack
         self.defense = defense
+        self.damage = damage
+        self.ac = ac
         self.lives = lives
         self.alive = True
 
@@ -30,7 +32,6 @@ class EnemyClass(object):
                 self.alive = False
 
 
-
 class Goblin(EnemyClass):
     """A lowly Goblin"""
     def __init__(self, name):
@@ -49,7 +50,7 @@ class Hobgoblin(Goblin):
 class Wolf(EnemyClass):
     """A basic wolf"""
     def __init__(self, name):
-        super().__init__(name=name, health=3, attack=2, defense=1)
+        super().__init__(name=name, health=3, damage=2, defense=1)
 
 
 class DireWolf(Wolf):
@@ -59,3 +60,5 @@ class DireWolf(Wolf):
         super().__init__(name=name)
         self.max_hit_points = 6
         self.current_hit_points = 6
+        self.attack = 1
+        self.ac = 11
