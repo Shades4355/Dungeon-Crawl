@@ -20,14 +20,14 @@ while player.alive:
     while player.alive and combat:
         time.sleep(1)
 
-        print("\n" + player.name + ": " + str(player.current_health) + " health" + "\nXP: " + str(player.xp)) # TODO: remove xp from print out
+        print("\n" + player.name + ": " + str(player.current_health) + " health" + "\nlevel: " + str(player.level))
         time.sleep(1)
 
         f.playerTurn(player, enemiesInFight)
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
             combat = False
-    while player.xp >= 5 + player.level:
+    while player.xp >= 5 + player.level and player.alive:
         player.xp -= 5 + player.level
         player.advanceLevel()
         print("{0.name} reached level {0.level}".format(player))
