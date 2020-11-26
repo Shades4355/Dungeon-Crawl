@@ -6,15 +6,6 @@ import inventory.potions as potions
 import functions as f
 
 
-
-################
-# dictionaries #
-################
-
-inventoryActions = {
-"potion: cure light": potions.Cure_Light.heal,
-}
-
 #############
 # Main Loop #
 ############
