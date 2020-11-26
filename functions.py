@@ -49,12 +49,14 @@ def playerTurn(player:object, enemiesInFight:list):
                 enemy.take_damage(player.damage)
             else:
                 print(player.name, "missed")
+                player.xp += 1
             break
         elif choice == "quit":
             print("Goodbye")
             sys.exit()
 
     if not enemy.alive:
+        player.xp += enemy.grantXP
         del enemiesInFight[target - 1]
 
 def enemyTurn(player:object, enemiesInFight:list):

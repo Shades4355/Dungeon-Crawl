@@ -1,6 +1,6 @@
 class EnemyClass(object):
     """Generic Enemy class from which specific enemies are based"""
-    def __init__(self, name='template', health=1, attack=0, defense=0, damage=1, ac=10, lives=1):
+    def __init__(self, name='template', health=1, attack=0, defense=0, damage=1, ac=10, lives=1, grantXP=1):
         self.name = name
         self.max_hit_points = health
         self.current_hit_points = health
@@ -8,10 +8,11 @@ class EnemyClass(object):
         self.defense = defense
         self.damage = damage
         self.ac = ac
+        self.grantXP = grantXP
         self.lives = lives
         self.alive = True
 
-    def take_damage(self, damage):
+    def take_damage(self, damage:int):
         postDR = damage - self.defense
         if postDR > 0:
             hurt = postDR
@@ -45,6 +46,7 @@ class Hobgoblin(Goblin):
         self.max_hit_points = 6
         self.current_hit_points = 6
         self.defense = 1
+        self.grantXP = 2
 
 
 class Wolf(EnemyClass):
@@ -55,10 +57,10 @@ class Wolf(EnemyClass):
 
 class DireWolf(Wolf):
     """An advanced wolf."""
-
     def __init__(self, name):
         super().__init__(name=name)
         self.max_hit_points = 6
         self.current_hit_points = 6
         self.attack = 1
         self.ac = 11
+        self.grantXP = 2

@@ -8,6 +8,8 @@ class PlayerClass:
         self.defense = defense
         self.attack= attack
         self.ac = ac
+        self.level = 1
+        self.xp = 0
         self.special = special
         self.inventory = inventory
         self.lives = 1
@@ -56,3 +58,9 @@ class PlayerClass:
                 print("{0.name} is dead".format(self))
                 self.current_health = 0
                 self.alive = False
+
+    def advanceLevel(self):
+        self.level += 1
+        self.max_health += 5
+        self.current_health = self.max_health
+        pass
