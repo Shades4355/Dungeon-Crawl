@@ -2,6 +2,10 @@ import random, time, sys
 
 import classes.enemyClass as enemyClass
 
+def roll(bonus:int):
+    """rolls 3d6 + bonus"""
+    return random.randint(1,6) + random.randint(1,6) + random.randint(1,6) + bonus
+
 def playerTurn(player:object, enemiesInFight:list):
     _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]
 
@@ -24,7 +28,7 @@ def playerTurn(player:object, enemiesInFight:list):
           target = int(target)
       except:
           target = 0
-          
+
     enemy = enemiesInFight[target - 1]
 
     print("Enemy has {} health and {} lives".format(enemy.current_hit_points, enemy.lives))
@@ -40,7 +44,11 @@ def playerTurn(player:object, enemiesInFight:list):
         elif "special" in choice.lower():
             player.showSpecialMoves(playerTurn, player, enemiesInFight)
         elif choice == "attack":
-            enemy.take_damage(player.damage)
+            attack = roll(player.attack)
+            if attack > enemy.ac:
+                enemy.take_damage(player.damage)
+            else:
+                print(player.name, "missed")
             break
         elif choice == "quit":
             print("Goodbye")
@@ -50,9 +58,13 @@ def playerTurn(player:object, enemiesInFight:list):
         del enemiesInFight[target - 1]
 
 def enemyTurn(player:object, enemiesInFight:list):
-    """Currently, enemies attack once and that's all"""
+    """Currently, enemies roll to attack once and that's all"""
     for enemy in enemiesInFight:
-        player.take_damage(enemy.attack)
+        attack = roll(enemy.attack)
+        if attack > player.ac:
+            player.take_damage(enemy.damage)
+        else:
+            print(enemy.name, "missed")
     # TODO: make this more interesting?
 
 def goblinEncounter(numOfFoes:int):
@@ -72,8 +84,8 @@ def goblinEncounter(numOfFoes:int):
         elif randomNum == 2:
             g += 1
             list.append(enemyClass.Goblin(name = "Goblin {}".format(g)))
-        elif randomNum == 2:
-            g += 1
+        elif randomNum == 3:
+            h += 1
             list.append(enemyClass.Hobgoblin(name = "Hobgoblin {}".format(h)))
     return list
 
