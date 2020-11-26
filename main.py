@@ -20,7 +20,7 @@ while player.alive:
     while player.alive and combat:
         time.sleep(1)
 
-        print("\n" + player.name + ": " + str(player.current_health) + " health\nXP: " + str(player.xp))
+        print("\n" + player.name + ": " + str(player.current_health) + " health" + "\nXP: " + str(player.xp)) # TODO: remove xp from print out
         time.sleep(1)
 
         f.playerTurn(player, enemiesInFight)
@@ -34,4 +34,5 @@ while player.alive:
         time.sleep(1)
 
     # TODO: add between combat action options
+print("{0.name} reached level {0.level}".format(player))
 sys.exit()
