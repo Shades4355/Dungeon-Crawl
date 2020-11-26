@@ -3,10 +3,7 @@ import random, time, sys
 import classes.enemyClass as enemyClass
 
 def playerTurn(player:object, enemiesInFight:list):
-    _COMBAT_ACTIONS = {
-    "inventory": player.showInventory,
-    "special": player.showSpecialMoves,
-    }
+    _COMBAT_ACTIONS = ["attack", "inventory", "special", "quit"]
 
     MAINCOMBATDISPLAY_PIC = '''
     ########################
@@ -27,7 +24,7 @@ def playerTurn(player:object, enemiesInFight:list):
           target = int(target)
       except:
           target = 0
-      # TODO: add check to avoid crashing when a non-int is entered
+          
     enemy = enemiesInFight[target - 1]
 
     print("Enemy has {} health and {} lives".format(enemy.current_hit_points, enemy.lives))
@@ -48,9 +45,6 @@ def playerTurn(player:object, enemiesInFight:list):
         elif choice == "quit":
             print("Goodbye")
             sys.exit()
-        else:
-            print('Invalid command; please try again')
-            time.sleep(1)
 
     if not enemy.alive:
         del enemiesInFight[target - 1]
