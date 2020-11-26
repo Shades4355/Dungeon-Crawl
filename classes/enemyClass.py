@@ -50,3 +50,12 @@ class Wolf(EnemyClass):
     """A basic wolf"""
     def __init__(self, name):
         super().__init__(name=name, health=3, attack=2, defense=1)
+
+
+class DireWolf(Wolf):
+    """An advanced wolf."""
+
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.max_hit_points = 6
+        self.current_hit_points = 6
