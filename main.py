@@ -1,21 +1,19 @@
-import random
+import random, time, sys
 
-import classes.playerClass as playerClass
+from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
-
-name = input("Enter your name:\n>> ")
-
-player = playerClass.PlayerClass(name=name)
-
-print("name:", player.name)
-print("Inventory:", player.inventory)
-print("Special Moves:", player.special)
-print()
+import inventory.potions as potions
+import functions as f
 
 
-#############
-# Main Loop #
-############
+
+################
+# dictionaries #
+################
+
+inventoryActions = {
+"potion: cure light": potions.Cure_Light.heal,
+}
 
 _RANDOM_ENCOUNTER = {e.name.casefold(): e for e in [
 enemyClass.Goblin(name = "Goblin"),
@@ -23,16 +21,30 @@ enemyClass.Wolf(name = "Wolf"),
 enemyClass.Hobgoblin(name = "Hobgoblin"),
 ]}
 
-def randomEncounterChooser():
-  enemyType = random.choice(list(_RANDOM_ENCOUNTER.values()))
-  return enemyType
 
+#############
+# Main Loop #
+############
+name = input("Enter your name:\n>> ")
+player = PlayerClass(name=name)
 
-numberOfEnemyCombatants = 3 #
-enemiesInFight = []
-for i in range(numberOfEnemyCombatants):
-  i = randomEncounterChooser()
-  enemiesInFight.append(i)
+while player.alive:
+    numberOfEnemyCombatants = random.randint(1,3)
+    enemiesInFight = []
+    for i in range(numberOfEnemyCombatants):
+        encounter = f.randomEncounterChooser(_RANDOM_ENCOUNTER)
+        enemiesInFight.append(encounter)
 
-for i in range(len(enemiesInFight)):
-    print("enemy " + str(i + 1) + ": " + enemiesInFight[i].name + " " + "; health: " + str(enemiesInFight[i].current_hit_points))
+    combat = True
+    while combat:
+        time.sleep(1)
+
+        print("\n" + player.name + ": " + str(player.current_health) + " health")
+        time.sleep(1)
+
+        f.playerTurn(player, enemiesInFight)
+        f.enemyTurn(player, enemiesInFight)
+        if len(enemiesInFight) <= 0:
+            combat = False
+    # TODO: add between combat action options
+sys.exit()
