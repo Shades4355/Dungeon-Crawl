@@ -35,16 +35,16 @@ def playerTurn(player:object, enemiesInFight:list):
         print(MAINCOMBATDISPLAY_PIC)
         choice = input(">> ").lower()
 
-      if "inventory" in choice.lower():
-          player.showInventory(playerTurn, player, enemiesInFight)
-      elif "special" in choice.lower():
-          player.showSpecialMoves(playerTurn, player, enemiesInFight)
-      elif choice == "attack":
-          enemy.take_damage(player.damage)
-          break
-      elif choice == "quit":
-          print("Goodbye")
-          sys.exit()
+        if "inventory" in choice.lower():
+            player.showInventory(playerTurn, player, enemiesInFight)
+        elif "special" in choice.lower():
+            player.showSpecialMoves(playerTurn, player, enemiesInFight)
+        elif choice == "attack":
+            enemy.take_damage(player.damage)
+            break
+        elif choice == "quit":
+            print("Goodbye")
+            sys.exit()
 
     if not enemy.alive:
         del enemiesInFight[target - 1]
