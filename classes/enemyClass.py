@@ -1,6 +1,11 @@
+import random
+
+d6 = random.randint(1, 6)
+d8 = random.randint(1, 8)
+
 class EnemyClass(object):
     """Generic Enemy class from which specific enemies are based"""
-    def __init__(self, name='template', health=1, attack=0, defense=0, damage=1, ac=9, lives=1, grantXP=1):
+    def __init__(self, name='template', health=1, attack=0, defense=0, damage=4, ac=9, lives=1, grantXP=1):
         self.name = name
         self.max_hit_points = health
         self.current_hit_points = health
@@ -11,6 +16,9 @@ class EnemyClass(object):
         self.grantXP = grantXP
         self.lives = lives
         self.alive = True
+
+    def doDamage(self):
+        return random.randint(1, self.damage)
 
     def take_damage(self, damage:int):
         postDR = damage - self.defense
@@ -47,6 +55,7 @@ class Hobgoblin(Goblin):
         self.current_hit_points = 6
         self.defense = 1
         self.grantXP = 2
+        self.damage = 6
 
 
 class Wolf(EnemyClass):
@@ -64,3 +73,4 @@ class DireWolf(Wolf):
         self.attack = 1
         self.ac = 10
         self.grantXP = 2
+        self.damage = 6

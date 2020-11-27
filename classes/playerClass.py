@@ -1,6 +1,8 @@
+import random
+
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, damage=2, defense=0, attack=0, ac=10, special=[], inventory=["potion: cure light", "scroll: escape"]):
+    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["potion: cure light", "scroll: escape"]):
         self.name = name
         self.current_health = health
         self.max_health = health
@@ -15,7 +17,10 @@ class PlayerClass:
         self.lives = 1
         self.alive = True
 
-    def showSpecialMoves(self, playerTurn, player, enemiesInFight):
+    def doDamage(self):
+        return random.randint(1, self.damage)
+
+    def showSpecialMoves(self, playerTurn, player:object, enemiesInFight:list):
         print('Special Moves', end=': ')
         print(", ".join(self.special))
         choice = ''
@@ -27,7 +32,7 @@ class PlayerClass:
         elif choice.lower() == "back":
             playerTurn(player, enemiesInFight)
 
-    def showInventory(self, playerTurn, player, enemiesInFight):
+    def showInventory(self, playerTurn, player:object, enemiesInFight:list):
         print("Inventory ", end=': ')
         print(", ".join(self.inventory))
         choice = ''
@@ -39,7 +44,7 @@ class PlayerClass:
         elif choice.lower() == "back":
             playerTurn(player, enemiesInFight)
 
-    def take_damage(self, damage):
+    def take_damage(self, damage:int):
         postDR = damage - self.defense
         if postDR > 0:
             hurt = postDR
