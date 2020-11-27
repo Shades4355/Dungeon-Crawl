@@ -5,6 +5,9 @@ Patrick "Shades" Wetzel-Meyers
 ### Description
 A command line basemd hack-and-slash dungeon crawler, written in Python.
 
+### To Play
+* clone repo
+* in command line, run '''python3 main.py'''
 
 ### To Do
 * [x] Add equipment
