@@ -1,6 +1,7 @@
 import random, time, sys
 
 import classes.enemyClass as enemyClass
+import inventory.potions as potions
 
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
@@ -58,6 +59,7 @@ def playerTurn(player:object, enemiesInFight:list):
     if not enemy.alive:
         player.xp += enemy.grantXP
         del enemiesInFight[target - 1]
+        equipmentDrop(player)
 
 def enemyTurn(player:object, enemiesInFight:list):
     """Currently, enemies roll to attack once and that's all"""
@@ -115,3 +117,64 @@ def randomEncounter(numOfFoes:int):
         return wolfEncounter(numOfFoes)
     elif randomNum == 2:
         return goblinEncounter(numOfFoes)
+
+def equipmentDrop(player:object):
+    _WEAPON_LOOT_TABLE = [
+        {"Greatsword": ["cleave",],
+         "damage": 4},
+        {"Dagger": ["flurry",],
+         "damage": 2},
+        {"Staff": ["fireball", "cleave"],
+         "damage": 1}
+    ]
+    _ARMOR_LOOT_TABLE = [
+        {"leather": 1},
+        {"chain": 2},
+        {"half-plate": 3},
+        {"full-plate": 4},
+    ]
+    _ITEM_LOOT_TABLE = [
+        "potion: cure light",
+    ]
+    _LOOT_TABLE = [
+        _WEAPON_LOOT_TABLE,
+        _ARMOR_LOOT_TABLE,
+        _ITEM_LOOT_TABLE,
+    ]
+
+    lootTable = random.choice(_LOOT_TABLE)
+    if lootTable == _WEAPON_LOOT_TABLE:
+        weaponDic = random.choice(_WEAPON_LOOT_TABLE)
+        weaponName = list(weaponDic.keys())[0]
+        choice = input("Equip " + str(weaponName) + "?\n>> ")
+        weaponSpecial = list(weaponDic.values())[0]
+        weaponDamage = list(weaponDic.values())[1]
+        # Equip Weapon
+        if choice.lower().startswith("y"):
+            player.special = weaponSpecial
+            print(player.special)
+            player.damage = weaponDamage
+        else:
+            print("discarding " + weaponName)
+
+    if lootTable == _ITEM_LOOT_TABLE:
+        itemName = random.choice(_ITEM_LOOT_TABLE)
+        # itemName = list(itemDic.keys())[0]
+        choice = input("Equip " + str(itemName) + "?\n>> ")
+        # Equip item
+        if choice.lower().startswith("y"):
+            player.inventory.append(itemName)
+            print(player.inventory)
+        else:
+            print("discarding " + itemName)
+
+    if lootTable == _ARMOR_LOOT_TABLE:
+        armorDic = random.choice(_ARMOR_LOOT_TABLE)
+        armorName = list(armorDic.keys())[0]
+        armorDefense = list(armorDic.values())[0]
+        choice = input("Equip " + str(armorName) + " (defense: " + str(armorDefense) + ")" + "?\n>> ")
+        # Equip Armor
+        if choice.lower().startswith("y"):
+            player.defense = armorDefense
+        else:
+            print("discarding " + armorName)
