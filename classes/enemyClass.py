@@ -1,8 +1,5 @@
 import random
 
-d6 = random.randint(1, 6)
-d8 = random.randint(1, 8)
-
 class EnemyClass(object):
     """Generic Enemy class from which specific enemies are based"""
     def __init__(self, name='template', health=1, attack=0, defense=0, damage=4, ac=9, lives=1, grantXP=1):
