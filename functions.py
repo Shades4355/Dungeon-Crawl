@@ -146,9 +146,9 @@ def equipmentDrop(player:object):
         _ITEM_LOOT_TABLE,
     ]
 
-    lootTable = random.choice(_LOOT_TABLE)
+    lootTable = random.choices(_LOOT_TABLE, weights=(2,1,2), k=1)[0]
     if lootTable == _WEAPON_LOOT_TABLE:
-        weaponDic = random.choice(_WEAPON_LOOT_TABLE)
+        weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(1, 2, 2, 2), k=1)[0]
         weaponName = list(weaponDic.keys())[0]
         choice = input("Equip " + str(weaponName) + "?\n>> ")
         weaponSpecial = list(weaponDic.values())[0]
@@ -161,6 +161,17 @@ def equipmentDrop(player:object):
         else:
             print("discarding " + weaponName)
 
+    if lootTable == _ARMOR_LOOT_TABLE:
+        armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2,1), k=1)[0]
+        armorName = list(armorDic.keys())[0]
+        armorDefense = list(armorDic.values())[0]
+        choice = input("Equip " + str(armorName) + " (defense: " + str(armorDefense) + ")" + "?\n>> ")
+        # Equip Armor
+        if choice.lower().startswith("y"):
+            player.defense = armorDefense
+        else:
+            print("discarding " + armorName)
+
     if lootTable == _ITEM_LOOT_TABLE:
         itemName = random.choice(_ITEM_LOOT_TABLE)
         choice = input("Equip " + str(itemName) + "?\n>> ")
@@ -170,14 +181,3 @@ def equipmentDrop(player:object):
             print(", ".join(player.inventory))
         else:
             print("discarding " + itemName)
-
-    if lootTable == _ARMOR_LOOT_TABLE:
-        armorDic = random.choice(_ARMOR_LOOT_TABLE)
-        armorName = list(armorDic.keys())[0]
-        armorDefense = list(armorDic.values())[0]
-        choice = input("Equip " + str(armorName) + " (defense: " + str(armorDefense) + ")" + "?\n>> ")
-        # Equip Armor
-        if choice.lower().startswith("y"):
-            player.defense = armorDefense
-        else:
-            print("discarding " + armorName)
