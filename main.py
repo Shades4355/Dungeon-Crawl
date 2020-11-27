@@ -3,6 +3,7 @@ import random, time, sys
 from classes.playerClass import PlayerClass
 import classes.enemyClass as enemyClass
 import inventory.potions as potions
+import inventory.scrolls as scrolls
 import functions as f
 
 
