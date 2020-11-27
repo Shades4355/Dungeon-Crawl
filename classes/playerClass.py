@@ -63,4 +63,4 @@ class PlayerClass:
         self.level += 1
         self.max_health += 5
         self.current_health = self.max_health
-        pass
+        self.attack == self.level // 3
