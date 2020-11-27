@@ -16,4 +16,4 @@ A command line based hack-and-slash dungeon crawler, written in Python.
     * [x] Items add to Inventory
 * [ ] Make inventory items usable
 * [ ] Make special moves usable
-* [ ] Make damage variable (ex '1d6' instead of '2')
+* [x] Make damage variable (ex '1d6' instead of '2')
