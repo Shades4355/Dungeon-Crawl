@@ -47,7 +47,8 @@ def playerTurn(player:object, enemiesInFight:list):
         elif choice == "attack":
             attack = roll(player.attack)
             if attack > enemy.ac:
-                enemy.take_damage(player.damage)
+                damage = player.doDamage()
+                enemy.take_damage(damage)
             else:
                 print(player.name, "missed")
                 player.xp += 1
@@ -66,7 +67,8 @@ def enemyTurn(player:object, enemiesInFight:list):
     for enemy in enemiesInFight:
         attack = roll(enemy.attack)
         if attack > player.ac:
-            player.take_damage(enemy.damage)
+            damage = enemy.doDamage()
+            player.take_damage(damage)
         else:
             print(enemy.name, "missed")
     # TODO: make this more interesting?
@@ -121,11 +123,13 @@ def randomEncounter(numOfFoes:int):
 def equipmentDrop(player:object):
     _WEAPON_LOOT_TABLE = [
         {"Greatsword": ["cleave",],
-         "damage": 4},
+         "damage": 10},
+        {"Longsword": [],
+         "damage": 6},
         {"Dagger": ["flurry",],
-         "damage": 2},
+         "damage": 4},
         {"Staff": ["fireball", "cleave"],
-         "damage": 1}
+         "damage": 4}
     ]
     _ARMOR_LOOT_TABLE = [
         {"leather": 1},
@@ -152,19 +156,18 @@ def equipmentDrop(player:object):
         # Equip Weapon
         if choice.lower().startswith("y"):
             player.special = weaponSpecial
-            print(player.special)
+            print(", ".join(player.special))
             player.damage = weaponDamage
         else:
             print("discarding " + weaponName)
 
     if lootTable == _ITEM_LOOT_TABLE:
         itemName = random.choice(_ITEM_LOOT_TABLE)
-        # itemName = list(itemDic.keys())[0]
         choice = input("Equip " + str(itemName) + "?\n>> ")
         # Equip item
         if choice.lower().startswith("y"):
             player.inventory.append(itemName)
-            print(player.inventory)
+            print(", ".join(player.inventory))
         else:
             print("discarding " + itemName)
 
