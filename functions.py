@@ -57,10 +57,12 @@ def playerTurn(player:object, enemiesInFight:list):
             print("Goodbye")
             sys.exit()
 
-    if not enemy.alive:
-        player.xp += enemy.grantXP
-        del enemiesInFight[target - 1]
-        equipmentDrop(player)
+    for i in range(len(enemiesInFight) - 1, -1, -1):
+        enemy = enemiesInFight[i]
+        if not enemy.alive:
+            player.xp += enemy.grantXP
+            del enemiesInFight[i]
+            equipmentDrop(player)
 
 def enemyTurn(player:object, enemiesInFight:list):
     """Currently, enemies roll to attack once and that's all"""
@@ -150,13 +152,13 @@ def equipmentDrop(player:object):
     if lootTable == _WEAPON_LOOT_TABLE:
         weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(1, 2, 2, 2), k=1)[0]
         weaponName = list(weaponDic.keys())[0]
-        choice = input("Equip " + str(weaponName) + "?\n>> ")
+        choice = input("Equip " + str(weaponName) + "? (y/n)\n>> ")
         weaponSpecial = list(weaponDic.values())[0]
         weaponDamage = list(weaponDic.values())[1]
         # Equip Weapon
         if choice.lower().startswith("y"):
             player.special = weaponSpecial
-            print(", ".join(player.special))
+            print("Special: " + ", ".join(player.special))
             player.damage = weaponDamage
         else:
             print("discarding " + weaponName)
@@ -165,7 +167,8 @@ def equipmentDrop(player:object):
         armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2,1), k=1)[0]
         armorName = list(armorDic.keys())[0]
         armorDefense = list(armorDic.values())[0]
-        choice = input("Equip " + str(armorName) + " (defense: " + str(armorDefense) + ")" + "?\n>> ")
+        choice = input("Equip " + str(armorName) +
+                       " (defense: " + str(armorDefense) + ")" + "? (y/n)\n>> ")
         # Equip Armor
         if choice.lower().startswith("y"):
             player.defense = armorDefense
@@ -174,10 +177,10 @@ def equipmentDrop(player:object):
 
     if lootTable == _ITEM_LOOT_TABLE:
         itemName = random.choice(_ITEM_LOOT_TABLE)
-        choice = input("Equip " + str(itemName) + "?\n>> ")
+        choice = input("Equip " + str(itemName) + "? (y/n)\n>> ")
         # Equip item
         if choice.lower().startswith("y"):
             player.inventory.append(itemName)
-            print(", ".join(player.inventory))
+            print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
