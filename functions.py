@@ -66,6 +66,7 @@ def playerTurn(player:object, enemiesInFight:list):
 
 def enemyTurn(player:object, enemiesInFight:list):
     """Currently, enemies roll to attack once and that's all"""
+    # TODO: make this more interesting?
     for enemy in enemiesInFight:
         attack = roll(enemy.attack)
         if attack > player.ac:
@@ -73,7 +74,7 @@ def enemyTurn(player:object, enemiesInFight:list):
             player.take_damage(damage)
         else:
             print(enemy.name, "missed")
-    # TODO: make this more interesting?
+
 
 def goblinEncounter(numOfFoes:int):
     """An encounter table for a random goblin encounter
