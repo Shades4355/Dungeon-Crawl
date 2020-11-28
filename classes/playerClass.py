@@ -23,12 +23,6 @@ class PlayerClass:
 
     def showSpecialMoves(self, playerTurn, player:object, enemiesInFight:list):
 
-        # if cooldown == 0
-        # invoke special
-            # Cleave - hit all enemies
-            # flurry - 2 random attacks
-            # fireball - 5 damage to all enemies
-        # cooldown == 3
         if self.specialCooldown == 0:
             print('Special Moves', end=': ')
             print(", ".join(self.special))
@@ -36,7 +30,6 @@ class PlayerClass:
             while choice not in self.special and choice.lower() != "back":
                 choice = input(">> ")
             if choice in self.special:
-                # TODO: use Special move
                 if choice.lower() == "cleave":
                     for enemy in enemiesInFight:
                         enemy.take_damage(player.doDamage())
