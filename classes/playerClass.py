@@ -13,6 +13,7 @@ class PlayerClass:
         self.level = 1
         self.xp = 0
         self.special = special
+        self.specialCooldown = 0
         self.inventory = inventory
         self.lives = 1
         self.alive = True
@@ -21,15 +22,37 @@ class PlayerClass:
         return random.randint(1, self.damage)
 
     def showSpecialMoves(self, playerTurn, player:object, enemiesInFight:list):
-        print('Special Moves', end=': ')
-        print(", ".join(self.special))
-        choice = ''
-        while choice not in self.special and choice.lower() != "back":
-            choice = input(">> ")
-        if choice in self.special:
-            # TODO: use Special move
-            pass
-        elif choice.lower() == "back":
+
+        # if cooldown == 0
+        # invoke special
+            # Cleave - hit all enemies
+            # flurry - 2 random attacks
+            # fireball - 5 damage to all enemies
+        # cooldown == 3
+        if self.specialCooldown == 0:
+            print('Special Moves', end=': ')
+            print(", ".join(self.special))
+            choice = ''
+            while choice not in self.special and choice.lower() != "back":
+                choice = input(">> ")
+            if choice in self.special:
+                # TODO: use Special move
+                if choice.lower() == "cleave":
+                    for enemy in enemiesInFight:
+                        enemy.take_damage(player.doDamage())
+                elif choice.lower() == "flurry":
+                    enemy = random.choice(enemiesInFight)
+                    enemy.take_damage(player.doDamage())
+                    enemy = random.choice(enemiesInFight)
+                    enemy.take_damage(player.doDamage())
+                elif choice.lower() == "fireball":
+                    for enemy in enemiesInFight:
+                        enemy.take_damage(5)
+                self.specialCooldown = 4
+            elif choice.lower() == "back":
+                playerTurn(player, enemiesInFight)
+        else:
+            print("Special on cooldown for {} more turns".format(self.specialCooldown))
             playerTurn(player, enemiesInFight)
 
     def showInventory(self, playerTurn, player:object, enemiesInFight:list):

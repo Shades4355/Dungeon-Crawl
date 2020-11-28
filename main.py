@@ -25,6 +25,8 @@ while player.alive:
         time.sleep(1)
 
         f.playerTurn(player, enemiesInFight)
+        if player.specialCooldown > 0:
+            player.specialCooldown -= 1
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
             combat = False
