@@ -1,7 +1,7 @@
 import random, time, sys
 
-import classes.enemyClass as enemyClass
-import inventory.potions as potions
+import enemyClass as enemyClass
+import potions as potions
 
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
@@ -43,7 +43,7 @@ def playerTurn(player:object, enemiesInFight:list):
         if "inventory" in choice.lower():
             player.showInventory(playerTurn, player, enemiesInFight)
         elif "special" in choice.lower():
-            player.showSpecialMoves(playerTurn, player, enemiesInFight)
+            player.showSpecialMoves(playerTurn, player, enemy, enemiesInFight)
         elif choice == "attack":
             attack = roll(player.attack)
             if attack > enemy.ac:
@@ -74,7 +74,6 @@ def enemyTurn(player:object, enemiesInFight:list):
             player.take_damage(damage)
         else:
             print(enemy.name, "missed")
-
 
 def goblinEncounter(numOfFoes:int):
     """An encounter table for a random goblin encounter
@@ -127,12 +126,14 @@ def equipmentDrop(player:object):
     _WEAPON_LOOT_TABLE = [
         {"Greatsword": ["cleave",],
          "damage": 10},
-        {"Longsword": [],
+        {"Longsword": ["stab"],
          "damage": 6},
         {"Dagger": ["flurry",],
          "damage": 4},
-        {"Staff": ["fireball", "cleave"],
-         "damage": 4}
+        {"Staff": ["fireball", "magic missle"],
+         "damage": 4},
+        {"Twin Swords": ["flurry"],
+         "damage": 6}
     ]
     _ARMOR_LOOT_TABLE = [
         {"leather": 1},
@@ -141,7 +142,8 @@ def equipmentDrop(player:object):
         {"full-plate": 4},
     ]
     _ITEM_LOOT_TABLE = [
-        "potion: cure light",
+        "cure light potion",
+        "cure moderate potion",
     ]
     _LOOT_TABLE = [
         _WEAPON_LOOT_TABLE,
@@ -151,7 +153,7 @@ def equipmentDrop(player:object):
 
     lootTable = random.choices(_LOOT_TABLE, weights=(2,1,2), k=1)[0]
     if lootTable == _WEAPON_LOOT_TABLE:
-        weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(1, 2, 2, 2), k=1)[0]
+        weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(1, 2, 2, 1, 2), k=1)[0]
         weaponName = list(weaponDic.keys())[0]
         choice = input("Equip " + str(weaponName) + "? (y/n)\n>> ")
         weaponSpecial = list(weaponDic.values())[0]
@@ -177,7 +179,7 @@ def equipmentDrop(player:object):
             print("discarding " + armorName)
 
     if lootTable == _ITEM_LOOT_TABLE:
-        itemName = random.choice(_ITEM_LOOT_TABLE)
+        itemName = random.choices(_ITEM_LOOT_TABLE, weight=(3,1), k=1)[0]
         choice = input("Equip " + str(itemName) + "? (y/n)\n>> ")
         # Equip item
         if choice.lower().startswith("y"):

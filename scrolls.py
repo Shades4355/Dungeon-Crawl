@@ -10,4 +10,3 @@ class Escape(Scroll):
 
     def escape(self):
         combat = False
-        pass

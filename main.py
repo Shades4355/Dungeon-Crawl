@@ -1,9 +1,9 @@
 import random, time, sys
 
-from classes.playerClass import PlayerClass
-import classes.enemyClass as enemyClass
-import inventory.potions as potions
-import inventory.scrolls as scrolls
+from playerClass import PlayerClass
+import enemyClass as enemyClass
+import potions as potions
+import scrolls as scrolls
 import functions as f
 
 
