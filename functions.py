@@ -1,7 +1,7 @@
 import random, time, sys
 
-import classes.enemyClass as enemyClass
-import inventory.potions as potions
+import enemyClass as enemyClass
+import potions as potions
 
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
@@ -74,7 +74,6 @@ def enemyTurn(player:object, enemiesInFight:list):
             player.take_damage(damage)
         else:
             print(enemy.name, "missed")
-
 
 def goblinEncounter(numOfFoes:int):
     """An encounter table for a random goblin encounter

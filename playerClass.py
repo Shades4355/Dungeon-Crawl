@@ -1,8 +1,11 @@
 import random
 
+import potions
+import scrolls
+
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["potion: cure light", "scroll: escape"]):
+    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["potion: cure light", "potion: cure light"]):
         self.name = name
         self.current_health = health
         self.max_health = health
@@ -49,13 +52,18 @@ class PlayerClass:
             playerTurn(player, enemiesInFight)
 
     def showInventory(self, playerTurn, player:object, enemiesInFight:list):
+        cure_light = potions.Cure_Light()
+        escape_scroll = scrolls.Escape()
+
         print("Inventory ", end=': ')
         print(", ".join(self.inventory))
         choice = ''
         while choice not in self.inventory and choice.lower() != "back":
             choice = input(">> ")
         if choice in self.inventory:
-            # TODO: use item
+            if choice == "potion: cure light":
+                cure_light.heal(player)
+            self.inventory.remove(choice)
             pass
         elif choice.lower() == "back":
             playerTurn(player, enemiesInFight)
