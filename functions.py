@@ -172,7 +172,7 @@ def equipmentDrop(player:object):
         armorName = list(armorDic.keys())[0]
         armorDefense = list(armorDic.values())[0]
         choice = input("Equip " + str(armorName) +
-                       " (defense: " + str(armorDefense) + ")" + "? (y/n)\n>> ")
+                       " (defense: " + str(armorDefense) + ")" + "?" + "\n(current armor " + str(player.defense) + ")" + " (y/n)\n>> ")
         # Equip Armor
         if choice.lower().startswith("y"):
             player.defense = armorDefense
