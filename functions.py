@@ -55,6 +55,7 @@ def playerTurn(player:object, enemiesInFight:list):
             break
         elif choice == "quit":
             print("Goodbye")
+            print("{0.name} reached level {0.level}".format(player))
             sys.exit()
 
     for i in range(len(enemiesInFight) - 1, -1, -1):
@@ -155,7 +156,7 @@ def equipmentDrop(player:object):
     if lootTable == _WEAPON_LOOT_TABLE:
         weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(2, 3, 3, 1, 3), k=1)[0]
         weaponName = list(weaponDic.keys())[0]
-        choice = input("Equip " + str(weaponName) + "? (y/n)\n>> ")
+        choice = input("\nEquip " + str(weaponName) + "? (y/n)\n>> ")
         weaponSpecial = list(weaponDic.values())[0]
         weaponDamage = list(weaponDic.values())[1]
         # Equip Weapon
@@ -170,8 +171,8 @@ def equipmentDrop(player:object):
         armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2,1), k=1)[0]
         armorName = list(armorDic.keys())[0]
         armorDefense = list(armorDic.values())[0]
-        choice = input("Equip " + str(armorName) +
-                       " (defense: " + str(armorDefense) + ")" + "? (y/n)\n>> ")
+        choice = input("\nEquip " + str(armorName) +
+                       " (defense: " + str(armorDefense) + ")" + "?" + "\n(current armor " + str(player.defense) + ")" + " (y/n)\n>> ")
         # Equip Armor
         if choice.lower().startswith("y"):
             player.defense = armorDefense
@@ -180,7 +181,7 @@ def equipmentDrop(player:object):
 
     if lootTable == _ITEM_LOOT_TABLE:
         itemName = random.choices(_ITEM_LOOT_TABLE, weights=(3,1), k=1)[0]
-        choice = input("Equip " + str(itemName) + "? (y/n)\n>> ")
+        choice = input("\nEquip " + str(itemName) + "? (y/n)\n>> ")
         # Equip item
         if choice.lower().startswith("y"):
             player.inventory.append(itemName)

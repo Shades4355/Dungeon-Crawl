@@ -1,4 +1,4 @@
-import random, time, sys
+import random, time, sys, math
 
 from playerClass import PlayerClass
 import enemyClass as enemyClass
@@ -14,8 +14,8 @@ name = input("Enter your name:\n>> ")
 player = PlayerClass(name=name)
 
 while player.alive:
-    numberOfEnemyCombatants = random.randint(1,3)
-    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants)
+    numberOfEnemyCombatants = player.level / 2
+    enemiesInFight = f.randomEncounter(math.ceil(numberOfEnemyCombatants))
 
     combat = True
     while player.alive and combat:
