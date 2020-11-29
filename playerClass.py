@@ -67,7 +67,7 @@ class PlayerClass:
         if choice in self.inventory:
             if choice == "cure light potion":
                 cure_light.heal(player)
-            elif choice.lower() = "cure moderate potion":
+            elif choice.lower() == "cure moderate potion":
                 cure_moderate.heal(player)
             self.inventory.remove(choice)
 
