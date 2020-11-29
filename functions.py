@@ -55,6 +55,7 @@ def playerTurn(player:object, enemiesInFight:list):
             break
         elif choice == "quit":
             print("Goodbye")
+            print("{0.name} reached level {0.level}".format(player))
             sys.exit()
 
     for i in range(len(enemiesInFight) - 1, -1, -1):
