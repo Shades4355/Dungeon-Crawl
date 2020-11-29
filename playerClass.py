@@ -5,7 +5,7 @@ import scrolls
 
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["potion: cure light", "potion: cure light"]):
+    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["cure light potion", "cure light potion"]):
         self.name = name
         self.current_health = health
         self.max_health = health
@@ -24,8 +24,7 @@ class PlayerClass:
     def doDamage(self):
         return random.randint(1, self.damage)
 
-    def showSpecialMoves(self, playerTurn, player:object, enemiesInFight:list):
-
+    def showSpecialMoves(self, playerTurn, player:object, enemy:object, enemiesInFight:list):
         if self.specialCooldown == 0:
             print('Special Moves', end=': ')
             print(", ".join(self.special))
@@ -43,8 +42,13 @@ class PlayerClass:
                     enemy.take_damage(player.doDamage())
                 elif choice.lower() == "fireball":
                     for enemy in enemiesInFight:
-                        enemy.take_damage(5)
+                        enemy.take_damage(4)
+                elif choice.lower() == "stab":
+                    enemy.take_damage(player.doDamage())
+                elif choice.lower() == "magic missle":
+                    enemy.take_damage(6)
                 self.specialCooldown = 4
+
             elif choice.lower() == "back":
                 playerTurn(player, enemiesInFight)
         else:
@@ -53,7 +57,7 @@ class PlayerClass:
 
     def showInventory(self, playerTurn, player:object, enemiesInFight:list):
         cure_light = potions.Cure_Light()
-        escape_scroll = scrolls.Escape()
+        cure_moderate = potions.Cure_Moderate()
 
         print("Inventory ", end=': ')
         print(", ".join(self.inventory))
@@ -61,10 +65,12 @@ class PlayerClass:
         while choice not in self.inventory and choice.lower() != "back":
             choice = input(">> ")
         if choice in self.inventory:
-            if choice == "potion: cure light":
+            if choice == "cure light potion":
                 cure_light.heal(player)
+            elif choice.lower() = "cure moderate potion":
+                cure_moderate.heal(player)
             self.inventory.remove(choice)
-            pass
+
         elif choice.lower() == "back":
             playerTurn(player, enemiesInFight)
 
