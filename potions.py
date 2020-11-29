@@ -14,3 +14,9 @@ class Cure_Light(Potion):
     """The weakest of healing potions"""
     def __init__(self, name="Cure Light"):
         super().__init__(name=name, number=5)
+
+
+class Cure_Moderate(Potion):
+    """A tier 2 healing potion"""
+    def __init__(self, name="Cure Moderate"):
+        super().__init__(name=name, number=10)
