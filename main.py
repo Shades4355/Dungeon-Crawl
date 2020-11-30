@@ -14,8 +14,8 @@ name = input("Enter your name:\n>> ")
 player = PlayerClass(name=name)
 
 while player.alive:
-    numberOfEnemyCombatants = player.level / 2
-    enemiesInFight = f.randomEncounter(math.ceil(numberOfEnemyCombatants))
+    numberOfEnemyCombatants = math.ceil(player.level / 2)
+    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants, player)
 
     combat = True
     while player.alive and combat:
