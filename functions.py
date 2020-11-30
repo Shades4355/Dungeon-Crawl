@@ -1,7 +1,7 @@
 import random, time, sys
 
-import enemyClass as enemyClass
-import potions as potions
+from classes import enemyClass
+from equipment import potions
 
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
