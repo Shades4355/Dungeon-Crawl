@@ -5,11 +5,12 @@ from equipment import scrolls
 
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, damage=4, defense=0, attack=0, ac=10, special=[], inventory=["cure light potion", "cure light potion"]):
+    def __init__(self, name='Tim(?)', health=25, min_damage=1, max_damage=4, defense=0, attack=0, ac=10, special=[], inventory=["cure light potion", "cure light potion"]):
         self.name = name
         self.current_health = health
         self.max_health = health
-        self.damage = damage
+        self.min_damage = min_damage
+        self.max_damage = max_damage
         self.defense = defense
         self.attack= attack
         self.ac = ac
@@ -22,7 +23,7 @@ class PlayerClass:
         self.alive = True
 
     def doDamage(self):
-        return random.randint(1, self.damage)
+        return random.randint(self.min_damage, self.max_damage)
 
     def showSpecialMoves(self, playerTurn, player:object, enemy:object, enemiesInFight:list):
         if self.specialCooldown == 0:
