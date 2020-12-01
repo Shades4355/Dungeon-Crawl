@@ -84,7 +84,7 @@ def equipmentDrop(player:object):
         {"Dagger": ["flurry",],
          "min_damage":2,
          "max_damage": 4},
-        {"Staff": ["fireball", "magic missle"],
+        {"Staff": ["fireball", "magic missile"],
          "min_damage":1,
          "max_damage": 4},
         {"Twin Swords": ["flurry"],
