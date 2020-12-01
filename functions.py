@@ -152,7 +152,7 @@ def vampireEncounter(numOfFoes:int):
         elif randomNum == 2:
             if l == 0:
                 l += 1
-                list.append(enemyClass.VampireLord(name = "VampireLord {}".format(l)))
+                list.append(enemyClass.VampireLord(name = "Vampire Lord {}".format(l)))
             else:
                 v += 1
                 list.append(enemyClass.Vampire(name = "Vampire {}".format(v)))
