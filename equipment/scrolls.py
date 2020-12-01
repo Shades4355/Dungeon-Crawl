@@ -4,7 +4,7 @@ class Scroll(object):
 
 
 class Escape(Scroll):
-    """A scroll to temporarily escape combat"""
+    """A scroll to escape combat"""
     def __init__(self, name = "scroll of escape"):
         self.name = name
 
