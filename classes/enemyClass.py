@@ -122,7 +122,7 @@ class Vampire(Undead):
             self. current_hit_points = self.max_hit_points
         else:
             self.current_hit_points += damage
-
+        print("{0.name} drained your essence, healing by {1}".format(self, damage))
         return damage
 
 
@@ -144,6 +144,6 @@ class Thrall(Vampire):
 
         if self.current_hit_points < self.max_hit_points:
             self. current_hit_points =+ 2
-
+        print("{0.name} drained your essence, healing by 2".format(self))
         return damage
     pass
