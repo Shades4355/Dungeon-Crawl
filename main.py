@@ -31,13 +31,14 @@ while player.alive:
         print()
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
-            combat = False
+            player.inCombat = False
     while player.xp >= 5 + player.level and player.alive:
         player.xp -= 5 + player.level
         player.advanceLevel()
         print("{0.name} reached level {0.level}".format(player))
         time.sleep(1)
-
     # TODO: add between combat action options
+    player.specialCooldown = 0
+    # add shop
 print("{0.name} reached level {0.level}".format(player))
 sys.exit()
