@@ -45,7 +45,7 @@ class PlayerClass:
                     for enemy in enemiesInFight:
                         enemy.take_damage(4)
                 elif choice.lower() == "stab":
-                    enemy.take_damage(player.doDamage())
+                    enemy.take_damage(player.doDamage()*2)
                 elif choice.lower() == "magic missle":
                     enemy.take_damage(6)
                 self.specialCooldown = 4
