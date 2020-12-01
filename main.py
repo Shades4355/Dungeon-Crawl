@@ -17,8 +17,8 @@ while player.alive:
     numberOfEnemyCombatants = math.ceil(player.level / 2)
     enemiesInFight = f.randomEncounter(numberOfEnemyCombatants, player)
 
-    combat = True
-    while player.alive and combat:
+    player.inCombat = True
+    while player.alive and player.inCombat:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + " health" + "\nlevel: " + str(player.level))
@@ -27,6 +27,7 @@ while player.alive:
         f.playerTurn(player, enemiesInFight)
         if player.specialCooldown > 0:
             player.specialCooldown -= 1
+        print()
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
             combat = False

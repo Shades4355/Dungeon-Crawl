@@ -201,6 +201,7 @@ def equipmentDrop(player:object):
     _ITEM_LOOT_TABLE = [
         "cure light potion",
         "cure moderate potion",
+        "scroll of escape",
     ]
     _LOOT_TABLE = [
         _WEAPON_LOOT_TABLE,
@@ -238,7 +239,7 @@ def equipmentDrop(player:object):
             print("discarding " + armorName)
 
     if lootTable == _ITEM_LOOT_TABLE:
-        itemName = random.choices(_ITEM_LOOT_TABLE, weights=(3,1), k=1)[0]
+        itemName = random.choices(_ITEM_LOOT_TABLE, weights=(3,1,2), k=1)[0]
         choice = input("\nEquip " + str(itemName) + "? (y/n)\n>> ")
         # Equip item
         if choice.lower().startswith("y"):

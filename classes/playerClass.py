@@ -59,6 +59,7 @@ class PlayerClass:
     def showInventory(self, playerTurn, player:object, enemiesInFight:list):
         cure_light = potions.Cure_Light()
         cure_moderate = potions.Cure_Moderate()
+        scroll_escape = scrolls.Escape()
 
         print("Inventory ", end=': ')
         print(", ".join(self.inventory))
@@ -70,6 +71,8 @@ class PlayerClass:
                 cure_light.heal(player)
             elif choice.lower() == "cure moderate potion":
                 cure_moderate.heal(player)
+            elif choice.lower() == "scroll of escape":
+                scroll_escape.escape(player)
             self.inventory.remove(choice)
 
         elif choice.lower() == "back":
