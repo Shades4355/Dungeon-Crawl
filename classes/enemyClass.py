@@ -92,8 +92,12 @@ class Ghoul(Undead):
     """A corse eating ghoul"""
     def __init__(self, name):
         super().__init__(name=name)
+        self.current_health = random.randint(1, self.max_hit_points)
 
 
 class Skeleton(Undead):
     """A basic Skeleton"""
-    pass
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.max_hit_points = 4
+        self.current_hit_points = random.randint(1, self.max_hit_points)
