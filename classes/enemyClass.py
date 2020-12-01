@@ -106,7 +106,6 @@ class Skeleton(Undead):
         self.current_hit_points = random.randint(1, self.max_hit_points)
 
 
-# TODO: add vampires, Vampire Lords, and Thralls
 class Vampire(Undead):
     """A basic vampire"""
     def __init__(self, name):
@@ -123,25 +122,28 @@ class Vampire(Undead):
             self. current_hit_points = self.max_hit_points
         else:
             self.current_hit_points += damage
-
+        print("{0.name} drained your essence, healing by {1}".format(self, damage))
         return damage
 
 
 class VampireLord(Vampire):
-    # multiple lives
-    # self.grantXP = 4
-    # self.min_damage = 2
-    # self.max_damage = 6
-    pass
+    """A lord among Vampires"""
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.min_damage = 2
+        self.max_damage = 6
+        self.current_hit_points = random.randint(3, self.max_hit_points)
+        self.grantXP = 5
+        self.lives = 3
 
 
-class Thrall(Undead):
-    # multiple lives
+class Thrall(Vampire):
+    """A thrall created by a Vampire or Vampire Lord"""
     def doDamage(self):
         damage = random.randint(self.min_damage, self.max_damage)
 
         if self.current_hit_points < self.max_hit_points:
             self. current_hit_points =+ 2
-
+        print("{0.name} drained your essence, healing by 2".format(self))
         return damage
     pass
