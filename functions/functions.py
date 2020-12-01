@@ -84,7 +84,7 @@ def equipmentDrop(player:object):
         {"Dagger": ["flurry",],
          "min_damage":2,
          "max_damage": 4},
-        {"Staff": ["fireball", "magic missle"],
+        {"Staff": ["fireball", "magic missile"],
          "min_damage":1,
          "max_damage": 4},
         {"Twin Swords": ["flurry"],
@@ -143,9 +143,19 @@ def equipmentDrop(player:object):
         # Equip item
         if choice.lower().startswith("y"):
             player.inventory.append(itemName)
+            player.inventory.sort()
             print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
+        while len(player.inventory) > 5:
+            print("\nToo many items, pick one to discard:")
+            print(", ".join(player.inventory))
+
+            choice = ""
+            while choice not in player.inventory:
+                choice = input(">> ")
+            player.inventory.remove(choice)
+
 
 def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""
