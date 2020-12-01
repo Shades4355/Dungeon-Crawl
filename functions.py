@@ -1,7 +1,7 @@
 import random, time, sys
 
-import enemyClass as enemyClass
-import potions as potions
+from classes import enemyClass
+from equipment import potions
 
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
@@ -13,7 +13,7 @@ def playerTurn(player:object, enemiesInFight:list):
     MAINCOMBATDISPLAY_PIC = '''
     ########################
     #  attack  # inventory #
-    # special  #   quit    #
+    #  special #   quit    #
     ########################
     '''
 
@@ -116,12 +116,36 @@ def wolfEncounter(numOfFoes:int):
             list.append(enemyClass.DireWolf(name = "Dire Wolf {}".format(d)))
     return list
 
-def randomEncounter(numOfFoes:int):
-    randomNum = random.randint(1, 2)
-    if randomNum == 1:
-        return wolfEncounter(numOfFoes)
-    elif randomNum == 2:
-        return goblinEncounter(numOfFoes)
+def undeadEncounter(numOfFoes:int):
+    """An encounter table for a random undead encounter"""
+    list = []
+    z = 0
+    g = 0
+    s = 0
+    for i in range(numOfFoes):
+        randomNum = random.randint(1, 3)
+
+        if randomNum == 1:
+            z += 1
+            list.append(enemyClass.Zombie(name = "Zombie {}".format(z)))
+        elif randomNum == 2:
+            g += 1
+            list.append(enemyClass.Ghoul(name = "Ghoul {}".format(g)))
+        elif randomNum == 3:
+            s += 1
+            list.append(enemyClass.Skeleton(name = "Skeleton {}".format(s)))
+
+    return list
+
+def randomEncounter(numOfFoes:int, player:object):
+    if player.level <= 3:
+        encounters = [goblinEncounter, wolfEncounter]
+    else:
+        encounters = [goblinEncounter, wolfEncounter, undeadEncounter]
+
+    randomChoice = random.choices(encounters)[0]
+
+    return randomChoice(numOfFoes)
 
 def equipmentDrop(player:object):
     _WEAPON_LOOT_TABLE = [

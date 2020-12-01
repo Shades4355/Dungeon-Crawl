@@ -71,3 +71,32 @@ class DireWolf(Wolf):
         self.ac = 10
         self.grantXP = 2
         self.damage = 6
+
+
+class Undead(EnemyClass):
+    """"A generic undead"""
+    def __init__(self, name):
+        super().__init__(name=name, damage=6, defense=2, health=6)
+
+
+class Zombie(Undead):
+    """A weak but hard to kill Zombie"""
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.defense = 3
+        self.max_hit_points = 1
+        self.current_hit_points = 1
+
+
+class Ghoul(Undead):
+    """A corse eating ghoul"""
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.current_health = random.randint(3, self.max_hit_points)
+
+
+class Skeleton(Undead):
+    """A basic Skeleton"""
+    def __init__(self, name):
+        super().__init__(name=name)
+        self.current_hit_points = random.randint(1, self.max_hit_points)

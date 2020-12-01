@@ -1,9 +1,9 @@
 import random, time, sys, math
 
-from playerClass import PlayerClass
-import enemyClass as enemyClass
-import potions as potions
-import scrolls as scrolls
+from classes.playerClass import PlayerClass
+from classes import enemyClass
+from equipment import potions
+from equipment import scrolls
 import functions as f
 
 
@@ -14,8 +14,8 @@ name = input("Enter your name:\n>> ")
 player = PlayerClass(name=name)
 
 while player.alive:
-    numberOfEnemyCombatants = player.level / 2
-    enemiesInFight = f.randomEncounter(math.ceil(numberOfEnemyCombatants))
+    numberOfEnemyCombatants = math.ceil(player.level / 2)
+    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants, player)
 
     combat = True
     while player.alive and combat:

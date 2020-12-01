@@ -1,7 +1,7 @@
 import random
 
-import potions
-import scrolls
+from equipment import potions
+from equipment import scrolls
 
 class PlayerClass:
     """A starting Player"""
