@@ -251,15 +251,19 @@ def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""
     if len(enemiesInFight) > 3:
         enemyIndex = enemiesInFight.index(enemy)
+
+        # first target
         if enemyIndex - 1 >= 0:
             enemiesInFight[enemyIndex - 1].take_damage(player.doDamage())
         else:
             enemiesInFight[-1].take_damage(player.doDamage())
+        # second target
         enemy.take_damage(player.doDamage())
+        # third target
         if enemyIndex + 1 <= len(enemiesInFight) - 1:
             enemiesInFight[enemyIndex + 1].take_damage(player.doDamage())
         else:
             enemiesInFight[0].take_damage(player.doDamage())
-    else:
+    else: # if 3 or fewer foes, attack all foes
         for foe in enemiesInFight:
             foe.take_damage(player.doDamage())
