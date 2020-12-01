@@ -79,6 +79,16 @@ class PlayerClass:
         elif choice.lower() == "back":
             playerTurn(player, enemiesInFight)
 
+    def checkInventory(self):
+        while len(self.inventory) > 5:
+            print("\nToo many items, pick one to discard:")
+            print(", ".join(self.inventory))
+
+            choice = ""
+            while choice not in self.inventory:
+                choice = input(">> ")
+            self.inventory.remove(choice)
+
     def take_damage(self, damage:int):
         postDR = damage - self.defense
         if postDR > 0:

@@ -149,14 +149,7 @@ def equipmentDrop(player:object):
             print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
-        while len(player.inventory) > 5:
-            print("\nToo many items, pick one to discard:")
-            print(", ".join(player.inventory))
-
-            choice = ""
-            while choice not in player.inventory:
-                choice = input(">> ")
-            player.inventory.remove(choice)
+        player.checkInventory()
 
 def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""
@@ -213,7 +206,6 @@ def shop(player:object):
           "min damage": 2,
           "max damage": 4},
     ]
-
     back = {
         "name": "back",
         "type": "back",
@@ -254,3 +246,4 @@ def shop(player:object):
         else:
             print("You can't afford that.\n")
             choice = ''
+        player.checkInventory()
