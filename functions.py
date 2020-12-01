@@ -246,3 +246,20 @@ def equipmentDrop(player:object):
             print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
+
+def cleave(player:object, enemy:object, enemiesInFight:list):
+    """An attack that hits your target, and each adjacent foe"""
+    if len(enemiesInFight) > 3:
+        enemyIndex = enemiesInFight.index(enemy)
+        if enemyIndex - 1 >= 0:
+            enemiesInFight[enemyIndex - 1].take_damage(player.doDamage())
+        else:
+            enemiesInFight[-1].take_damage(player.doDamage())
+        enemy.take_damage(player.doDamage())
+        if enemyIndex + 1 <= len(enemiesInFight) - 1:
+            enemiesInFight[enemyIndex + 1].take_damage(player.doDamage())
+        else:
+            enemiesInFight[0].take_damage(player.doDamage())
+    else:
+        for foe in enemiesInFight:
+            foe.take_damage(player.doDamage())
