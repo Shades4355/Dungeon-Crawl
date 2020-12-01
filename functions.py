@@ -13,7 +13,7 @@ def playerTurn(player:object, enemiesInFight:list):
     MAINCOMBATDISPLAY_PIC = '''
     ########################
     #  attack  # inventory #
-    # special  #   quit    #
+    #  special #   quit    #
     ########################
     '''
 
