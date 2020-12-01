@@ -1,14 +1,14 @@
 import random, time, sys
 
-import from classes import enemyClass
+from classes import enemyClass
 
 def randomEncounter(numOfFoes:int, player:object):
     if player.level <= 3:
         encounters = [goblinEncounter, wolfEncounter]
     elif player.level <= 6:
-        encounters = [goblinEncounter, wolfEncounter, undeadEncounter]
+        encounters = [goblinEncounter, wolfEncounter, undeadEncounter, zombieHorde]
     else:
-        encounters = [goblinEncounter, wolfEncounter, undeadEncounter, vampireEncounter]
+        encounters = [goblinEncounter, wolfEncounter, undeadEncounter, zombieHorde, vampireEncounter]
 
     randomChoice = random.choices(encounters)[0]
 
@@ -98,4 +98,13 @@ def vampireEncounter(numOfFoes:int):
             t += 1
             list.append(enemyClass.Thrall(name = "Thrall {}".format(t)))
 
+    return list
+
+def zombieHorde(numOfFoes:int):
+    """A horde of zombies"""
+    list = []
+    z = 0
+    for i in range(numOfFoes*2):
+        z += 1
+        list.append(enemyClass.Zombie(name = "Zombie {}".format(z)))
     return list
