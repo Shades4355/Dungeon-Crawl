@@ -150,15 +150,20 @@ def randomEncounter(numOfFoes:int, player:object):
 def equipmentDrop(player:object):
     _WEAPON_LOOT_TABLE = [
         {"Greatsword": ["cleave",],
-         "damage": 10},
+         "min_damage":2,
+         "max_damage": 10},
         {"Longsword": ["stab"],
-         "damage": 6},
+         "min_damage":1,
+         "max_damage": 6},
         {"Dagger": ["flurry",],
-         "damage": 4},
+         "min_damage":2,
+         "max_damage": 4},
         {"Staff": ["fireball", "magic missle"],
-         "damage": 4},
+         "min_damage":1,
+         "max_damage": 4},
         {"Twin Swords": ["flurry"],
-         "damage": 6}
+         "min_damage":2,
+         "max_damage": 6}
     ]
     _ARMOR_LOOT_TABLE = [
         {"leather": 1},
@@ -182,12 +187,14 @@ def equipmentDrop(player:object):
         weaponName = list(weaponDic.keys())[0]
         choice = input("\nEquip " + str(weaponName) + "? (y/n)\n>> ")
         weaponSpecial = list(weaponDic.values())[0]
-        weaponDamage = list(weaponDic.values())[1]
+        weaponMinDamage = list(weaponDic.values())[1]
+        weaponmaxDamage = list(weaponDic.values())[2]
         # Equip Weapon
         if choice.lower().startswith("y"):
             player.special = weaponSpecial
             print("Special: " + ", ".join(player.special))
-            player.damage = weaponDamage
+            player.min_damage = weaponMinDamage
+            player.max_damage = weaponmaxDamage
         else:
             print("discarding " + weaponName)
 
