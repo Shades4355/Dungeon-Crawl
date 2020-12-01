@@ -76,7 +76,7 @@ class DireWolf(Wolf):
 class Undead(EnemyClass):
     """"A generic undead"""
     def __init__(self, name):
-        super().__init__(name=name, damage=6, defense=2)
+        super().__init__(name=name, damage=6, defense=2, health=6)
 
 
 class Zombie(Undead):
@@ -92,8 +92,6 @@ class Ghoul(Undead):
     """A corse eating ghoul"""
     def __init__(self, name):
         super().__init__(name=name)
-        self.max_hit_points = 6
-        self.current_hit_points = 6
 
 
 class Skeleton(Undead):
