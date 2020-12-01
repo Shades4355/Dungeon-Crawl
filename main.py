@@ -37,8 +37,7 @@ while player.alive:
         player.advanceLevel()
         print("{0.name} reached level {0.level}".format(player))
         time.sleep(1)
-    # TODO: add between combat action options
     player.specialCooldown = 0
-    # add shop
+    f.shop(player)
 print("{0.name} reached level {0.level}".format(player))
 sys.exit()

@@ -178,3 +178,79 @@ def cleave(player:object, enemy:object, enemiesInFight:list):
     else: # if 3 or fewer foes, attack all foes
         for foe in enemiesInFight:
             foe.take_damage(player.doDamage())
+
+def shop(player:object):
+    items = [
+        {"name": "cure light potion",
+         "type": "item",
+         "price": 1},
+        {"name": "cure moderate potion",
+         "type": "item",
+         "price": 3},
+        {"name": "scroll of escape",
+         "type": "item",
+         "price": 2},
+
+        {"name": "leather",
+         "type": "armor",
+         "armor": 1,
+         "price": 5},
+        {"name": "chain",
+         "type": "armor",
+         "armor": 2,
+         "price": 10},
+
+        {"name": "longsword",
+         "type": "weapon",
+         "price": 3,
+         "special": ["stab"],
+         "min damage": 1,
+         "max damage": 6},
+         {"name": "dagger",
+          "type": "weapon",
+          "price": 1,
+          "special": ["flurry"],
+          "min damage": 2,
+          "max damage": 4},
+    ]
+
+    back = {
+        "name": "back",
+        "type": "back",
+        "price": 0
+    }
+
+    # pick items for sale
+    forSaleList = random.choices(items, k=3)
+    forSaleList.append(back)
+
+    # choose an item to buy; or leave
+    inShop = True
+    while inShop == True:
+        choice = ''
+        while choice not in [i["name"] for i in forSaleList]:
+            print()
+            print("Player gold: " + str(player.gold))
+            for item in forSaleList:
+                print(item["name"] + "\n\tPrice: " + str(item["price"]))
+            choice = input("What would you like to buy?\n>> ")
+
+        index = [i["name"] for i in forSaleList].index(choice)
+        choice = forSaleList[index]
+
+        if choice["name"] == "back": # leave shop
+            inShop = False
+        elif player.gold >= choice["price"]:
+            player.gold -= choice["price"]
+            if choice["type"] == "item":
+                player.inventory.append(choice["name"])
+            elif choice["type"] == "armor":
+                player.defense = choice["armor"]
+            elif choice["type"] == "weapon":
+                player.special = choice["special"],
+                player.min_damage = choice["min damage"]
+                player.max_damage = choice["max damage"]
+            forSaleList.remove(choice)
+        else:
+            print("You can't afford that.\n")
+            choice = ''
