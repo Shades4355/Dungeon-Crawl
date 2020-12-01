@@ -55,10 +55,12 @@ def playerTurn(player:object, enemiesInFight:list):
             print("{0.name} reached level {0.level}".format(player))
             sys.exit()
 
+    # Checks if enemies are dead
     for i in range(len(enemiesInFight) - 1, -1, -1):
         enemy = enemiesInFight[i]
         if not enemy.alive:
             player.xp += enemy.grantXP
+            player.gold += enemy.loot
             del enemiesInFight[i]
             equipmentDrop(player)
 
@@ -155,7 +157,6 @@ def equipmentDrop(player:object):
             while choice not in player.inventory:
                 choice = input(">> ")
             player.inventory.remove(choice)
-
 
 def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""

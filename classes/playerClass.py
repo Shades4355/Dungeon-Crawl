@@ -6,7 +6,7 @@ from equipment import scrolls
 
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, min_damage=1, max_damage=4, defense=0, attack=0, ac=10, special=["stab"], inventory=["cure light potion", "cure light potion"]):
+    def __init__(self, name='Tim(?)', health=25, min_damage=1, max_damage=4, defense=0, attack=0, ac=10, special=["stab"], inventory=["cure light potion", "cure light potion"], gold=0):
         self.name = name
         self.current_health = health
         self.max_health = health
@@ -20,6 +20,7 @@ class PlayerClass:
         self.special = special
         self.specialCooldown = 0
         self.inventory = inventory
+        self.gold = gold
         self.lives = 1
         self.alive = True
 

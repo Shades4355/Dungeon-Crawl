@@ -2,7 +2,7 @@ import random
 
 class EnemyClass(object):
     """Generic Enemy class from which specific enemies are based"""
-    def __init__(self, name='template', health=1, attack=0, defense=0, min_damage=1, max_damage=4, ac=9, lives=1, grantXP=1):
+    def __init__(self, name='template', health=1, attack=0, defense=0, min_damage=1, max_damage=4, ac=9, lives=1, grantXP=1, loot=1):
         self.name = name
         self.max_hit_points = health
         self.current_hit_points = health
@@ -12,6 +12,7 @@ class EnemyClass(object):
         self.max_damage = max_damage
         self.ac = ac
         self.grantXP = grantXP
+        self.loot = loot
         self.lives = lives
         self.alive = True
 
@@ -43,6 +44,7 @@ class Goblin(EnemyClass):
     """A lowly Goblin"""
     def __init__(self, name):
         super().__init__(name=name, health=4)
+        self.loot = 2
 
 
 class Hobgoblin(Goblin):
@@ -80,7 +82,7 @@ class DireWolf(Wolf):
 class Undead(EnemyClass):
     """"A generic undead"""
     def __init__(self, name):
-        super().__init__(name=name, max_damage=6, defense=2, health=6, grantXP=2)
+        super().__init__(name=name, max_damage=6, defense=2, health=6, grantXP=2, loot=2)
 
 
 class Zombie(Undead):
@@ -114,6 +116,7 @@ class Vampire(Undead):
         self.current_hit_points = random.randint(3, self.max_hit_points)
         self.grantXP = 3
         self.lives = 2
+        self.loot = 3
 
     def doDamage(self):
         damage = random.randint(self.min_damage, self.max_damage)
@@ -135,6 +138,7 @@ class VampireLord(Vampire):
         self.current_hit_points = random.randint(3, self.max_hit_points)
         self.grantXP = 5
         self.lives = 3
+        self.loot = 5
 
 
 class Thrall(Vampire):
