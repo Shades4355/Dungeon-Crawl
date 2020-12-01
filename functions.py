@@ -137,11 +137,38 @@ def undeadEncounter(numOfFoes:int):
 
     return list
 
+def vampireEncounter(numOfFoes:int):
+    """An encounter table for a random undead encounter"""
+    list = []
+    v = 0
+    l = 0
+    t = 0
+    for i in range(numOfFoes):
+        randomNum = random.randint(1, 3)
+
+        if randomNum == 1:
+            v += 1
+            list.append(enemyClass.Vampire(name = "Vampire {}".format(v)))
+        elif randomNum == 2:
+            if l == 0:
+                l += 1
+                list.append(enemyClass.VampireLord(name = "VampireLord {}".format(l)))
+            else:
+                v += 1
+                list.append(enemyClass.Vampire(name = "Vampire {}".format(v)))
+        elif randomNum == 3:
+            t += 1
+            list.append(enemyClass.Thrall(name = "Thrall {}".format(t)))
+
+    return list
+
 def randomEncounter(numOfFoes:int, player:object):
     if player.level <= 3:
         encounters = [goblinEncounter, wolfEncounter]
-    else:
+    elif player.level <= 6:
         encounters = [goblinEncounter, wolfEncounter, undeadEncounter]
+    else:
+        encounters = [goblinEncounter, wolfEncounter, undeadEncounter, vampireEncounter]
 
     randomChoice = random.choices(encounters)[0]
 
