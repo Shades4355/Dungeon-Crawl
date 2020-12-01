@@ -4,7 +4,8 @@ from classes.playerClass import PlayerClass
 from classes import enemyClass
 from equipment import potions
 from equipment import scrolls
-import functions as f
+from functions import functions as f
+from functions import encounters as enc
 
 
 #############
@@ -15,10 +16,10 @@ player = PlayerClass(name=name)
 
 while player.alive:
     numberOfEnemyCombatants = math.ceil(player.level / 2)
-    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants, player)
+    enemiesInFight = enc.randomEncounter(numberOfEnemyCombatants, player)
 
-    combat = True
-    while player.alive and combat:
+    player.inCombat = True
+    while player.alive and player.inCombat:
         time.sleep(1)
 
         print("\n" + player.name + ": " + str(player.current_health) + " health" + "\nlevel: " + str(player.level))
@@ -27,15 +28,17 @@ while player.alive:
         f.playerTurn(player, enemiesInFight)
         if player.specialCooldown > 0:
             player.specialCooldown -= 1
+        print()
         f.enemyTurn(player, enemiesInFight)
         if len(enemiesInFight) <= 0:
-            combat = False
+            player.inCombat = False
     while player.xp >= 5 + player.level and player.alive:
         player.xp -= 5 + player.level
         player.advanceLevel()
         print("{0.name} reached level {0.level}".format(player))
         time.sleep(1)
-
     # TODO: add between combat action options
+    player.specialCooldown = 0
+    # add shop
 print("{0.name} reached level {0.level}".format(player))
 sys.exit()
