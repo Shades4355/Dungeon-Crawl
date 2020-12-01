@@ -1,5 +1,6 @@
 import random
 
+import functions as f
 from equipment import potions
 from equipment import scrolls
 
@@ -34,8 +35,7 @@ class PlayerClass:
                 choice = input(">> ")
             if choice in self.special:
                 if choice.lower() == "cleave":
-                    for enemy in enemiesInFight:
-                        enemy.take_damage(player.doDamage())
+                    f.cleave(player, enemy, enemiesInFight)
                 elif choice.lower() == "flurry":
                     enemy = random.choice(enemiesInFight)
                     enemy.take_damage(player.doDamage())
