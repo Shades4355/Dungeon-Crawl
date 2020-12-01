@@ -143,9 +143,19 @@ def equipmentDrop(player:object):
         # Equip item
         if choice.lower().startswith("y"):
             player.inventory.append(itemName)
+            player.inventory.sort()
             print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
+        while len(player.inventory) > 5:
+            print("\nToo many items, pick one to discard:")
+            print(", ".join(player.inventory))
+
+            choice = ""
+            while choice not in player.inventory:
+                choice = input(">> ")
+            player.inventory.remove(choice)
+
 
 def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""
