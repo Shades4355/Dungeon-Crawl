@@ -4,7 +4,8 @@ from classes.playerClass import PlayerClass
 from classes import enemyClass
 from equipment import potions
 from equipment import scrolls
-import functions as f
+from functions import functions as f
+from functions import encounters as enc
 
 
 #############
@@ -15,7 +16,7 @@ player = PlayerClass(name=name)
 
 while player.alive:
     numberOfEnemyCombatants = math.ceil(player.level / 2)
-    enemiesInFight = f.randomEncounter(numberOfEnemyCombatants, player)
+    enemiesInFight = enc.randomEncounter(numberOfEnemyCombatants, player)
 
     player.inCombat = True
     while player.alive and player.inCombat:
