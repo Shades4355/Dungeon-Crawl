@@ -62,7 +62,7 @@ class PlayerClass:
         cure_moderate = potions.Cure_Moderate()
         scroll_escape = scrolls.Escape()
 
-        print("Inventory ", end=': ')
+        print("\nInventory ", end=': ')
         print(", ".join(self.inventory))
         choice = ''
         while choice not in self.inventory and choice.lower() != "back":
@@ -77,7 +77,8 @@ class PlayerClass:
             self.inventory.remove(choice)
 
         elif choice.lower() == "back":
-            playerTurn(player, enemiesInFight)
+            if len(enemiesInFight) > 0:
+                playerTurn(player, enemiesInFight)
 
     def checkInventory(self):
         while len(self.inventory) > 5:

@@ -97,7 +97,6 @@ def equipmentDrop(player:object):
         {"leather": 1},
         {"chain": 2},
         {"half-plate": 3},
-        {"full-plate": 4},
     ]
     _ITEM_LOOT_TABLE = [
         "cure light potion",
@@ -128,7 +127,7 @@ def equipmentDrop(player:object):
             print("discarding " + weaponName)
 
     if lootTable == _ARMOR_LOOT_TABLE:
-        armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2,1), k=1)[0]
+        armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2), k=1)[0]
         armorName = list(armorDic.keys())[0]
         armorDefense = list(armorDic.values())[0]
         choice = input("\nEquip " + str(armorName) +
@@ -192,6 +191,10 @@ def shop(player:object):
          "type": "armor",
          "armor": 2,
          "price": 10},
+        {"name": "full-plate",
+         "type": "armor",
+         "armor": 4,
+         "price": 25},
 
         {"name": "longsword",
          "type": "weapon",
@@ -204,6 +207,18 @@ def shop(player:object):
           "price": 1,
           "special": ["flurry"],
           "min damage": 2,
+          "max damage": 4},
+         {"name": "twin swords",
+          "type": "weapon",
+          "price": 3,
+          "special": ["flurry"],
+          "min damage": 2,
+          "max damage": 6},
+         {"name": "staff",
+          "type": "weapon",
+          "price": 10,
+          "special": ["cleave", "fireball"],
+          "min damage": 1,
           "max damage": 4},
     ]
     back = {
@@ -239,7 +254,7 @@ def shop(player:object):
             elif choice["type"] == "armor":
                 player.defense = choice["armor"]
             elif choice["type"] == "weapon":
-                player.special = choice["special"],
+                player.special = choice["special"]
                 player.min_damage = choice["min damage"]
                 player.max_damage = choice["max damage"]
             forSaleList.remove(choice)

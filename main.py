@@ -39,5 +39,6 @@ while player.alive:
         time.sleep(1)
     player.specialCooldown = 0
     f.shop(player)
+    player.showInventory(f.playerTurn, player, enemiesInFight)
 print("{0.name} reached level {0.level}".format(player))
 sys.exit()

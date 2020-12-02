@@ -22,8 +22,7 @@ A command line based hack-and-slash dungeon crawler, written in Python.
     * [x] re-balance loot drop rates
     * [x] nerfed Cleave
     * [x] buffed Stab
-* [ ] Add between combat action options
-    * [ ] shop
-        * [ ] buy option
-        * [ ] sell option?
-    * [ ] add money
+* [x] Add between combat action options
+    * [x] shop
+        * [x] buy option
+    * [x] add money
