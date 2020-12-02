@@ -1,5 +1,8 @@
 import random, time, sys
 
+from equipment import weapons as w
+
+
 def roll(bonus:int):
     """rolls 3d6 + bonus"""
     return random.randint(1,6) + random.randint(1,6) + random.randint(1,6) + bonus
@@ -77,21 +80,16 @@ def enemyTurn(player:object, enemiesInFight:list):
 
 def equipmentDrop(player:object):
     _WEAPON_LOOT_TABLE = [
-        {"Greatsword": ["cleave",],
-         "min_damage":2,
-         "max_damage": 10},
-        {"Longsword": ["stab"],
-         "min_damage":1,
-         "max_damage": 6},
-        {"Dagger": ["flurry",],
-         "min_damage":2,
-         "max_damage": 4},
-        {"Staff": ["fireball", "magic missile"],
-         "min_damage":1,
-         "max_damage": 4},
-        {"Twin Swords": ["flurry"],
-         "min_damage":2,
-         "max_damage": 6}
+        {"name": w.Greatsword().name,
+         "equip": w.Greatsword()},
+        {"name": w.Longsword().name,
+         "equip": w.Longsword()},
+        {"name": w.Dagger().name,
+         "equip": w.Dagger()},
+        {"name": w.Staff().name,
+         "equip": w.Staff()},
+        {"name": w.TwinSwords().name,
+         "equip": w.TwinSwords()},
     ]
     _ARMOR_LOOT_TABLE = [
         {"leather": 1},
@@ -111,18 +109,14 @@ def equipmentDrop(player:object):
 
     lootTable = random.choices(_LOOT_TABLE, weights=(2,1,2), k=1)[0]
     if lootTable == _WEAPON_LOOT_TABLE:
-        weaponDic = random.choices(_WEAPON_LOOT_TABLE, weights=(2, 3, 3, 1, 3), k=1)[0]
-        weaponName = list(weaponDic.keys())[0]
-        choice = input("\nEquip " + str(weaponName) + "? (y/n)\n>> ")
-        weaponSpecial = list(weaponDic.values())[0]
-        weaponMinDamage = list(weaponDic.values())[1]
-        weaponmaxDamage = list(weaponDic.values())[2]
+        weaponObj = random.choices(_WEAPON_LOOT_TABLE, weights=(2, 3, 3, 1, 3), k=1)[0]
+        weaponName = weaponObj["name"]
+        choice = input("\nEquip " + weaponName + "? (y/n)\n>> ")
+
         # Equip Weapon
         if choice.lower().startswith("y"):
-            player.special = weaponSpecial
-            print("Special: " + ", ".join(player.special))
-            player.min_damage = weaponMinDamage
-            player.max_damage = weaponmaxDamage
+            player.weapon = weaponObj["equip"]
+            print("Special: " + ", ".join(player.weapon.special))
         else:
             print("discarding " + weaponName)
 
@@ -196,30 +190,26 @@ def shop(player:object):
          "armor": 4,
          "price": 25},
 
-        {"name": "longsword",
+        {"name": w.Longsword().name,
          "type": "weapon",
          "price": 3,
-         "special": ["stab"],
-         "min damage": 1,
-         "max damage": 6},
-         {"name": "dagger",
-          "type": "weapon",
-          "price": 1,
-          "special": ["flurry"],
-          "min damage": 2,
-          "max damage": 4},
-         {"name": "twin swords",
-          "type": "weapon",
-          "price": 3,
-          "special": ["flurry"],
-          "min damage": 2,
-          "max damage": 6},
-         {"name": "staff",
-          "type": "weapon",
-          "price": 10,
-          "special": ["cleave", "fireball"],
-          "min damage": 1,
-          "max damage": 4},
+         "equip": w.Longsword()},
+        {"name": w.Dagger().name,
+         "type": "weapon",
+         "price": 1,
+         "equip": w.Dagger()},
+        {"name": w.TwinSwords().name,
+         "type": "weapon",
+         "price": 3,
+         "equip": w.TwinSwords()},
+        {"name": w.Staff().name,
+         "type": "weapon",
+         "price": 10,
+         "equip": w.Staff()},
+        {"name": w.Greatsword().name,
+         "type": "weapon",
+         "price": 5,
+         "equip": w.Greatsword()}
     ]
     back = {
         "name": "back",
@@ -254,9 +244,7 @@ def shop(player:object):
             elif choice["type"] == "armor":
                 player.defense = choice["armor"]
             elif choice["type"] == "weapon":
-                player.special = choice["special"]
-                player.min_damage = choice["min damage"]
-                player.max_damage = choice["max damage"]
+                player.weapon = choice["equip"]
             forSaleList.remove(choice)
         else:
             print("You can't afford that.\n")

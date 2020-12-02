@@ -2,8 +2,6 @@ import random, time, sys, math
 
 from classes.playerClass import PlayerClass
 from classes import enemyClass
-from equipment import potions
-from equipment import scrolls
 from functions import functions as f
 from functions import encounters as enc
 
@@ -39,6 +37,8 @@ while player.alive:
         time.sleep(1)
     player.specialCooldown = 0
     f.shop(player)
+    print("\nUse an item before the next fight? ('back' to escape)")
     player.showInventory(f.playerTurn, player, enemiesInFight)
 print("{0.name} reached level {0.level}".format(player))
+input("[enter] to exit program")
 sys.exit()
