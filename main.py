@@ -40,4 +40,5 @@ while player.alive:
     print("\nUse an item before the next fight? ('back' to escape)")
     player.showInventory(f.playerTurn, player, enemiesInFight)
 print("{0.name} reached level {0.level}".format(player))
+input("[enter] to exit program")
 sys.exit()
