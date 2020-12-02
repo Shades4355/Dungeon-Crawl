@@ -3,21 +3,20 @@ import random
 from functions import functions as f
 from equipment import potions
 from equipment import scrolls
+from equipment import weapons as w
 
 class PlayerClass:
     """A starting Player"""
-    def __init__(self, name='Tim(?)', health=25, min_damage=1, max_damage=4, defense=0, attack=0, ac=10, special=["stab"], inventory=["cure light potion", "cure light potion"], gold=0):
+    def __init__(self, name='Tim(?)', health=25, weapon=w.Unarmed(), defense=0, attack=0, ac=10, special=["stab"], inventory=["cure light potion", "cure light potion"], gold=0):
         self.name = name
         self.current_health = health
         self.max_health = health
-        self.min_damage = min_damage
-        self.max_damage = max_damage
+        self.weapon = weapon
         self.defense = defense
         self.attack= attack
         self.ac = ac
         self.level = 1
         self.xp = 0
-        self.special = special
         self.specialCooldown = 0
         self.inventory = inventory
         self.gold = gold
@@ -25,16 +24,16 @@ class PlayerClass:
         self.alive = True
 
     def doDamage(self):
-        return random.randint(self.min_damage, self.max_damage)
+        return random.randint(self.weapon.min_damage, self.weapon.max_damage)
 
     def showSpecialMoves(self, playerTurn, player:object, enemy:object, enemiesInFight:list):
         if self.specialCooldown == 0:
             print('Special Moves', end=': ')
-            print(", ".join(self.special))
+            print(", ".join(self.weapon.special))
             choice = ''
-            while choice not in self.special and choice.lower() != "back":
+            while choice not in self.weapon.special and choice.lower() != "back":
                 choice = input(">> ")
-            if choice in self.special:
+            if choice in self.weapon.special:
                 if choice.lower() == "cleave":
                     f.cleave(player, enemy, enemiesInFight)
                 elif choice.lower() == "flurry":
