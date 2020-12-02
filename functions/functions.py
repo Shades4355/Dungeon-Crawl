@@ -55,10 +55,12 @@ def playerTurn(player:object, enemiesInFight:list):
             print("{0.name} reached level {0.level}".format(player))
             sys.exit()
 
+    # Checks if enemies are dead
     for i in range(len(enemiesInFight) - 1, -1, -1):
         enemy = enemiesInFight[i]
         if not enemy.alive:
             player.xp += enemy.grantXP
+            player.gold += enemy.loot
             del enemiesInFight[i]
             equipmentDrop(player)
 
@@ -95,7 +97,6 @@ def equipmentDrop(player:object):
         {"leather": 1},
         {"chain": 2},
         {"half-plate": 3},
-        {"full-plate": 4},
     ]
     _ITEM_LOOT_TABLE = [
         "cure light potion",
@@ -126,7 +127,7 @@ def equipmentDrop(player:object):
             print("discarding " + weaponName)
 
     if lootTable == _ARMOR_LOOT_TABLE:
-        armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2,1), k=1)[0]
+        armorDic = random.choices(_ARMOR_LOOT_TABLE, weights=(8,4,2), k=1)[0]
         armorName = list(armorDic.keys())[0]
         armorDefense = list(armorDic.values())[0]
         choice = input("\nEquip " + str(armorName) +
@@ -147,15 +148,7 @@ def equipmentDrop(player:object):
             print("Inventory: " + ", ".join(player.inventory))
         else:
             print("discarding " + itemName)
-        while len(player.inventory) > 5:
-            print("\nToo many items, pick one to discard:")
-            print(", ".join(player.inventory))
-
-            choice = ""
-            while choice not in player.inventory:
-                choice = input(">> ")
-            player.inventory.remove(choice)
-
+        player.checkInventory()
 
 def cleave(player:object, enemy:object, enemiesInFight:list):
     """An attack that hits your target, and each adjacent foe"""
@@ -177,3 +170,95 @@ def cleave(player:object, enemy:object, enemiesInFight:list):
     else: # if 3 or fewer foes, attack all foes
         for foe in enemiesInFight:
             foe.take_damage(player.doDamage())
+
+def shop(player:object):
+    items = [
+        {"name": "cure light potion",
+         "type": "item",
+         "price": 1},
+        {"name": "cure moderate potion",
+         "type": "item",
+         "price": 3},
+        {"name": "scroll of escape",
+         "type": "item",
+         "price": 2},
+
+        {"name": "leather",
+         "type": "armor",
+         "armor": 1,
+         "price": 5},
+        {"name": "chain",
+         "type": "armor",
+         "armor": 2,
+         "price": 10},
+        {"name": "full-plate",
+         "type": "armor",
+         "armor": 4,
+         "price": 25},
+
+        {"name": "longsword",
+         "type": "weapon",
+         "price": 3,
+         "special": ["stab"],
+         "min damage": 1,
+         "max damage": 6},
+         {"name": "dagger",
+          "type": "weapon",
+          "price": 1,
+          "special": ["flurry"],
+          "min damage": 2,
+          "max damage": 4},
+         {"name": "twin swords",
+          "type": "weapon",
+          "price": 3,
+          "special": ["flurry"],
+          "min damage": 2,
+          "max damage": 6},
+         {"name": "staff",
+          "type": "weapon",
+          "price": 10,
+          "special": ["cleave", "fireball"],
+          "min damage": 1,
+          "max damage": 4},
+    ]
+    back = {
+        "name": "back",
+        "type": "back",
+        "price": 0
+    }
+
+    # pick items for sale
+    forSaleList = random.choices(items, k=3)
+    forSaleList.append(back)
+
+    # choose an item to buy; or leave
+    inShop = True
+    while inShop == True:
+        choice = ''
+        while choice not in [i["name"] for i in forSaleList]:
+            print()
+            print("Player gold: " + str(player.gold))
+            for item in forSaleList:
+                print(item["name"] + "\n\tPrice: " + str(item["price"]))
+            choice = input("What would you like to buy?\n>> ")
+
+        index = [i["name"] for i in forSaleList].index(choice)
+        choice = forSaleList[index]
+
+        if choice["name"] == "back": # leave shop
+            inShop = False
+        elif player.gold >= choice["price"]:
+            player.gold -= choice["price"]
+            if choice["type"] == "item":
+                player.inventory.append(choice["name"])
+            elif choice["type"] == "armor":
+                player.defense = choice["armor"]
+            elif choice["type"] == "weapon":
+                player.special = choice["special"]
+                player.min_damage = choice["min damage"]
+                player.max_damage = choice["max damage"]
+            forSaleList.remove(choice)
+        else:
+            print("You can't afford that.\n")
+            choice = ''
+        player.checkInventory()
