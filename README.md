@@ -26,3 +26,8 @@ A command line based hack-and-slash dungeon crawler, written in Python.
     * [x] shop
         * [x] buy option
     * [x] add money
+
+
+Gameplay:
+
+![sample early game play](https://github.com/Shades4355/Dungeon-Crawl/blob/main/screenshots/Screen%20Shot%202021-07-06%20at%201.43.31%20PM.png)
