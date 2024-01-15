@@ -1,6 +1,6 @@
 ### Dungeon Crawl
 ### Author
-Patrick "Shades" Wetzel-Meyers
+Patrick "Shades" Meyers
 
 ### Description
 A command line based hack-and-slash dungeon crawler, written in Python.
